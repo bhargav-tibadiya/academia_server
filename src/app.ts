@@ -1,13 +1,19 @@
 // Packages
-import express, { Application, NextFunction, Request, Response } from "express";
+import express, { Application, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
+// Utils & Config
+import { connect } from "./config/db";
 
 // Setup Environment
 dotenv.config();
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
+
+
+// DB Connection
+connect()
 
 
 // Middleware
