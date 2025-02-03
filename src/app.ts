@@ -2,9 +2,13 @@
 import express, { Application, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import rateLimit from "express-rate-limit";
+
 
 // Utils & Config
 import { connect } from "./config/db";
+import { rateLimiterConfig } from "./utils/constants/config";
+
 
 // Setup Environment
 dotenv.config();
@@ -16,9 +20,14 @@ const PORT = process.env.PORT || 5000;
 connect()
 
 
+// Rate Limiter
+const limiter = rateLimit(rateLimiterConfig);
+
+
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(limiter)
 
 
 // Routes
