@@ -1,10 +1,14 @@
 export const MESSAGES = {
   // Success Messages
+  USER_FETCHED: "User has been created successfully.",
   USER_CREATED: "User has been created successfully.",
   USER_UPDATED: "User has been updated successfully.",
   USER_DELETED: "User has been deleted successfully.",
   OPERATION_SUCCESSFUL: "Operation completed successfully.",
   DATA_FETCHED: "Data fetched successfully.",
+  DATA_CREATED: "Data created successfully.",
+  DATA_UPDATED: "Data updated successfully.",
+  DATA_DELETED: "Data deleted successfully.",
   USER_AUTHENTICATED: "User authenticated successfully",
 
   // Client Error Messages
