@@ -5,13 +5,16 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 
+// Models
+import Counter from "@models/counter.model";
+
+
 // Utils & Configs
 dotenv.config();
 
 
 // Types & Constants
-import { ExpiresInType } from "../types/models";
-import Counter from "./counter.model"; // Import Counter model
+import { ExpiresInType } from "@interfaces/models";
 
 
 const UserSchema: Schema = new Schema(

@@ -6,8 +6,8 @@ import rateLimit from "express-rate-limit";
 
 
 // Utils & Config
-import { connect } from "./config/db";
-import { rateLimiterConfig } from "./utils/constants/config";
+import { connect } from "@config/db";
+import { rateLimiterConfig } from "@utils/constants/config";
 
 
 // Setup Environment
