@@ -12,7 +12,7 @@ import { ROUTES } from "@utils/constants/routes";
 
 const router = Router();
 
-router.get(ROUTES.AUTH.LOGIN, loginUser);
-router.get(ROUTES.AUTH.SIGNUP, registerUser);
+router.post(ROUTES.AUTH.LOGIN, loginUser);
+router.post(ROUTES.AUTH.SIGNUP, registerUser);
 
 export default router;

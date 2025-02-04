@@ -1,6 +1,6 @@
 export const MESSAGES = {
   // Success Messages
-  USER_FETCHED: "User has been created successfully.",
+  USER_FETCHED: "User has been Fetched successfully.",
   USER_CREATED: "User has been created successfully.",
   USER_UPDATED: "User has been updated successfully.",
   USER_DELETED: "User has been deleted successfully.",

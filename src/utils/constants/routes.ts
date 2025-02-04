@@ -7,7 +7,7 @@ export const ROUTES = {
   },
   USER: {
     BASE: "/user",
-    GET: "/:userId",
+    GET: "/",
     GET_BY_ID: "/:userId",
     UPDATE: "/:userId",
     DELETE: "/:userId",

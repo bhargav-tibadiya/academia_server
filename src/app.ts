@@ -37,7 +37,7 @@ app.use(limiter)
 
 // Routes
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to the TypeScript Node.js backend!");
+  res.send("Welcome to the Academia backend \nMay the knowledge Guide your journey!");
 });
 
 app.use(ROUTES.BASE, RootRouter);
