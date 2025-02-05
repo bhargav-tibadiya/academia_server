@@ -1,14 +1,13 @@
-
 // Utils & Services
-import logger from "../../services/logger";
-import { responseCreator } from "../helpers";
+import logger from "@services/logger";
+import { responseCreator } from "@utils/helpers";
 
 
 // Const and Types
 import { NextFunction, Request, Response } from "express";
 import { Options } from "express-rate-limit";
-import { MESSAGES } from "./message";
-import { STATUS } from "./status";
+import { STATUS } from "@utils/constants/status";
+import { MESSAGES } from "@utils/constants/message";
 
 
 export const rateLimiterConfig = {
