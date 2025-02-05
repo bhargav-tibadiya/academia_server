@@ -58,10 +58,10 @@ export const getUserById: RequestHandler = async (req, res: ServerResponse) => {
 // --> Update user
 export const updateUser: RequestHandler = async (req, res: ServerResponse) => {
   const { userId } = req.params;
-  const updateData = req.body;
+  const { email } = req.body;
 
   try {
-    const updatedUser = await User.findOneAndUpdate({ userId }, updateData, { new: true, runValidators: true });
+    const updatedUser = await User.findOneAndUpdate({ userId }, email, { new: true, runValidators: true });
 
     if (!updatedUser) {
       logger.warn(`${MESSAGES.USER_NOT_FOUND}: ${userId}`);
