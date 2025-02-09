@@ -66,10 +66,10 @@ export const loginUser: RequestHandler = async (req: LoginUserRequest, res: Serv
 };
 
 export const registerUser: RequestHandler = async (req: RegisterUserRequest, res: ServerResponse) => {
-  const { name, email, password, mobile, gender, age } = req.body;
+  const { email, password, role } = req.body;
 
   try {
-    const isPayloadValid = (!!name || !!email || !!password || !!mobile || !!gender || !!age)
+    const isPayloadValid = (!!email || !!password || !!role)
     if (!isPayloadValid) {
       logger.warn(`${MESSAGES.MISSING_REQUIRED_FIELDS}: ${email}`);
       const response = responseCreator(STATUS.BAD_REQUEST, MESSAGES.MISSING_REQUIRED_FIELDS, false)
@@ -85,7 +85,7 @@ export const registerUser: RequestHandler = async (req: RegisterUserRequest, res
       return;
     }
 
-    const payload = { name, email, password, mobile, gender, age }
+    const payload = { email, password, role }
     const newUser = await User.create(payload);
     logger.info(`New user created: ${email}`);
     const response = responseCreator(STATUS.CREATED, MESSAGES.USER_AUTHENTICATED, true, newUser)
