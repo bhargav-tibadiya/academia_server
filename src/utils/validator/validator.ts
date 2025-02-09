@@ -36,6 +36,22 @@ const Validators = {
       .messages({
         "any.only": "Role must be either 'student', 'teacher', or 'status'",
       }),
+    otp: Joi.string()
+      .length(8)
+      .pattern(/^[a-zA-Z0-9]{8}$/)
+      .required()
+      .messages({
+        "string.length": "OTP must be exactly 8 characters long",
+        "string.pattern.base": "OTP must contain only numbers and letters",
+        "any.required": "OTP is required",
+      }),
+  }),
+
+  sendOtp: Joi.object({
+    email: Joi.string().email().required().messages({
+      "string.email": "Invalid email format",
+      "any.required": "Email is required",
+    }),
   }),
 
   // --> USER <--

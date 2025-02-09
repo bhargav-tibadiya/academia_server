@@ -15,3 +15,12 @@ export interface MTUser extends Document {
   matchPassword(enteredPassword: string): Promise<boolean>;
   getSignedToken(): string;
 }
+
+
+// --> MODEL.OTP <--
+export interface MTOTP extends Document {
+  name?: string;
+  email: string;
+  otp: string;
+  createdAt: Date;
+}
