@@ -18,12 +18,9 @@ export interface LoginUserRequest extends Request {
 
 // --> CONTROLLER.USER.REGISTER
 interface RegisterUserBody {
-  name: string;
   email: string;
   password: string;
-  mobile: string;
-  gender: "male" | "female" | "other";
-  age: number;
+  role: string,
 }
 export interface RegisterUserRequest extends Request {
   body: RegisterUserBody

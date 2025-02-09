@@ -30,6 +30,12 @@ const Validators = {
         "string.pattern.base": "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)",
         "any.required": "Password is required",
       }),
+    role: Joi.string()
+      .valid("student", "teacher", "admin")
+      .default("student")
+      .messages({
+        "any.only": "Role must be either 'student', 'teacher', or 'status'",
+      }),
   }),
 
   // --> USER <--

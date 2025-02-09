@@ -21,7 +21,7 @@ const UserSchema: Schema = new Schema(
   {
     userId: { // Auto-incremented user ID
       type: Number,
-      unique: true
+      unique: true,
     },
     email: {
       type: String,
@@ -35,11 +35,22 @@ const UserSchema: Schema = new Schema(
       minlength: [8, "Password must be at least 8 characters"],
       select: false,
     },
+    role: {
+      type: String,
+      enum: ["student", "teacher", "admin"],
+      default: "student",
+    },
+    status: {
+      type: String,
+      enum: ["none", "applied", "accepted", "rejected"],
+      default: "none",
+    },
   },
   {
     timestamps: true,
   }
 );
+
 
 // --> Auto-increment userId before saving a new user
 UserSchema.pre("save", async function (next) {
