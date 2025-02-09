@@ -4,6 +4,7 @@ export const ROUTES = {
     BASE: '/auth',
     LOGIN: '/login',
     SIGNUP: '/signup',
+    SEND_OTP: '/sendOtp',
   },
   USER: {
     BASE: "/user",

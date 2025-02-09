@@ -35,6 +35,7 @@ export const MESSAGES = {
   INVALID_EMAIL_FORMAT: "The email address format is invalid.",
   PASSWORD_MISMATCH: "The passwords do not match.",
   AGE_REQUIRES_OVER_18: "You must be over 18 years old to register.",
+  INVALID_OTP: "OTP you've entered is incorrect",
 
   // Rate Limiting
   TOO_MANY_REQUESTS: "You have made too many requests in a short period of time. Please try again later.",

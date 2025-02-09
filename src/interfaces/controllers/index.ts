@@ -21,7 +21,16 @@ interface RegisterUserBody {
   email: string;
   password: string;
   role: string,
+  otp: string
 }
 export interface RegisterUserRequest extends Request {
   body: RegisterUserBody
 }
+
+// --> CONTROLLER.USER.SEND_OTP
+interface SendOTPBody {
+  email: string
+}
+export interface SendOTPRequest extends Request {
+  body: SendOTPBody
+} 

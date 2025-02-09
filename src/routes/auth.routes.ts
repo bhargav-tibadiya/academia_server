@@ -3,7 +3,7 @@ import { Router } from "express";
 
 
 // Controller
-import { loginUser, registerUser } from "@controllers/auth.controller";
+import { loginUser, registerUser, sendOTP } from "@controllers/auth.controller";
 
 
 // Constants
@@ -16,5 +16,6 @@ const router = Router();
 
 router.post(ROUTES.AUTH.LOGIN, validatePayload(SCHEMAKEY.AUTH.LOGIN), loginUser);
 router.post(ROUTES.AUTH.SIGNUP, validatePayload(SCHEMAKEY.AUTH.SIGNUP), registerUser);
+router.post(ROUTES.AUTH.SEND_OTP, validatePayload(SCHEMAKEY.AUTH.SEND_OTP), sendOTP);
 
 export default router;

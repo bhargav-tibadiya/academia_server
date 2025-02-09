@@ -3,15 +3,16 @@
 
 // Model
 import User from "@models/user.model";
+import OTP from "@models/otp.model";
 
 
 // Utils & Config
 import logger from "@services/logger";
-import { responseCreator } from "@utils/helpers";
+import { generateOtp, responseCreator } from "@utils/helpers";
 
 
 // Types & Constant
-import { LoginUserRequest, RegisterUserRequest, ServerResponse } from "@interfaces/controllers";
+import { LoginUserRequest, RegisterUserRequest, SendOTPRequest, ServerResponse } from "@interfaces/controllers";
 import { MTUser } from "@interfaces/models/index";
 import { STATUS } from "@utils/constants/status";
 import { MESSAGES } from "@utils/constants/message";
@@ -66,34 +67,74 @@ export const loginUser: RequestHandler = async (req: LoginUserRequest, res: Serv
 };
 
 export const registerUser: RequestHandler = async (req: RegisterUserRequest, res: ServerResponse) => {
-  const { email, password, role } = req.body;
+  const { email, password, role, otp } = req.body;
 
   try {
-    const isPayloadValid = (!!email || !!password || !!role)
-    if (!isPayloadValid) {
+    if (!email || !password || !role || !otp) {
       logger.warn(`${MESSAGES.MISSING_REQUIRED_FIELDS}: ${email}`);
-      const response = responseCreator(STATUS.BAD_REQUEST, MESSAGES.MISSING_REQUIRED_FIELDS, false)
+      const response = responseCreator(STATUS.BAD_REQUEST, MESSAGES.MISSING_REQUIRED_FIELDS, false);
       res.status(STATUS.BAD_REQUEST).json(response);
-      return;
+      return
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       logger.warn(`${MESSAGES.USER_ALREADY_EXISTS}: ${email}`);
-      const response = responseCreator(STATUS.CONFLICT, MESSAGES.USER_ALREADY_EXISTS, false)
+      const response = responseCreator(STATUS.CONFLICT, MESSAGES.USER_ALREADY_EXISTS, false);
       res.status(STATUS.CONFLICT).json(response);
-      return;
+      return
     }
 
-    const payload = { email, password, role }
-    const newUser = await User.create(payload);
-    logger.info(`New user created: ${email}`);
-    const response = responseCreator(STATUS.CREATED, MESSAGES.USER_AUTHENTICATED, true, newUser)
-    res.status(STATUS.CREATED).json(response);
+    const recentOtp = await OTP.findOne({ email }).sort({ createdAt: -1 });
 
+    if (!recentOtp || recentOtp.otp !== otp) {
+      logger.warn(`Invalid OTP for email: ${email}`);
+      const response = responseCreator(STATUS.BAD_REQUEST, MESSAGES.INVALID_OTP, false);
+      res.status(STATUS.BAD_REQUEST).json(response);
+      return
+    }
+
+    const newUser = await User.create({ email, password, role });
+
+    logger.info(`New user created: ${email}`);
+
+    const response = responseCreator(STATUS.CREATED, MESSAGES.USER_AUTHENTICATED, true, newUser);
+    res.status(STATUS.CREATED).json(response);
+    return
   } catch (error: any) {
-    logger.error(`Error in loginUser: ${error.message}`);
-    const response = responseCreator(STATUS.INTERNAL_SERVER_ERROR, MESSAGES.INTERNAL_SERVER_ERROR, false)
+    logger.error(`Error in registerUser: ${error.message}`);
+    const response = responseCreator(STATUS.INTERNAL_SERVER_ERROR, MESSAGES.INTERNAL_SERVER_ERROR, false);
     res.status(STATUS.INTERNAL_SERVER_ERROR).json(response);
+    return
+  }
+};
+
+export const sendOTP: RequestHandler = async (req: SendOTPRequest, res: ServerResponse) => {
+  const { email } = req.body;
+
+  try {
+    if (!email) {
+      logger.warn(`Email is required`);
+      res.status(STATUS.BAD_REQUEST).json({ success: false, message: "Email is required" });
+      return
+    }
+
+    const user = await User.findOne({ email });
+    if (user) {
+      logger.warn(`User already exists: ${email}`);
+      res.status(STATUS.CONFLICT).json({ success: false, message: "User already exists. Please login." });
+      return
+    }
+
+    const otp = generateOtp(8)
+    await OTP.create({ email, otp });
+
+    logger.info(`OTP sent successfully to: ${email}`);
+    res.status(STATUS.OK).json({ success: true, message: "OTP sent successfully" });
+    return
+  } catch (error: any) {
+    logger.error(`Error in sendOTP: ${error.message}`);
+    res.status(STATUS.INTERNAL_SERVER_ERROR).json({ success: false, message: "Error while sending OTP" });
+    return
   }
 };
