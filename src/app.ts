@@ -3,15 +3,16 @@ import express, { Application, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
+import cors from "cors";
 
 
 // Router
-import RootRouter from '@routes/root.routes'
+import RootRouter from '@routes/root.routes';
 
 
 // Utils & Config
 import { connect } from "@config/db";
-import { rateLimiterConfig } from "@utils/constants/config";
+import { corsOptions, rateLimiterConfig } from "@utils/constants/config";
 import { ROUTES } from "@utils/constants/routes";
 
 
@@ -30,6 +31,7 @@ const limiter = rateLimit(rateLimiterConfig);
 
 
 // Middleware
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(limiter)

@@ -34,3 +34,10 @@ export const rateLimiterConfig = {
     res.status(STATUS.TOO_MANY_REQUESTS).json(response);
   }
 };
+
+export const corsOptions = {
+  origin: process.env.CLIENT_URL || "*",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
