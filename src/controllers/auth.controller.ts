@@ -39,7 +39,7 @@ export const loginUser: RequestHandler = async (req: LoginUserRequest, res: Serv
       return;
     }
 
-    const isPasswordValid = selectedUser.matchPassword(password);
+    const isPasswordValid = await selectedUser.matchPassword(password);
     if (!isPasswordValid) {
       logger.warn(`Invalid password attempt for email: ${email}`);
       const response = responseCreator(STATUS.UNAUTHORIZED, MESSAGES.PASSWORD_MISMATCH, false)
