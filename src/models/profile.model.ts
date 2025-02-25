@@ -9,6 +9,18 @@ const ProfileSchema = new Schema(
       ref: "User",
       required: true
     },
+    firstName: {
+      type: String,
+      required: true
+    },
+    middleName: {
+      type: String,
+      required: true
+    },
+    lastName: {
+      type: String,
+      required: true
+    },
     gender: {
       type: String,
       required: true,
