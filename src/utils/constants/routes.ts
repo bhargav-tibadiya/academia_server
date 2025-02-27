@@ -1,5 +1,6 @@
 export const ROUTES = {
   BASE: "/api/v1",
+  DOCS: '/api/docs',
   AUTH: {
     BASE: '/auth',
     LOGIN: '/login',

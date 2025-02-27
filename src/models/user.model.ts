@@ -81,8 +81,10 @@ UserSchema.methods.matchPassword = async function (enteredPassword: string) {
 // --> To get signed authentication token
 UserSchema.methods.getSignedToken = function () {
   const payload = {
+    id: this._id,
     userId: this.userId,
     email: this.email,
+    role: this.role,
   };
   const secret = process.env.JWT_SECRET;
   const config: jwt.SignOptions = { expiresIn: process.env.JWT_EXPIRE as ExpiresInType };
