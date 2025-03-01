@@ -1,16 +1,15 @@
 // Packages
 import { Router } from "express";
 
-
 // Controller
 import { loginUser, registerUser, sendOTP } from "@controllers/auth.controller";
 
+// Utils
+import validatePayload from "@middleware/validate";
 
 // Constants
 import { ROUTES } from "@utils/constants/routes";
-import validatePayload from "src/middleware/validate";
 import { SCHEMAKEY } from "@utils/constants/schemakey";
-
 
 const router = Router();
 

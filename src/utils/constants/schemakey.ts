@@ -6,6 +6,10 @@ interface SchemaKeyType {
   },
   USER: {
     UPDATE: "updateUser",
+  },
+  UPDATE: {
+    CREATE: "createUpdate",
+    UPDATE: "updateUpdate",
   }
 }
 
@@ -19,5 +23,10 @@ export const SCHEMAKEY: SchemaKeyType = {
   // 
   USER: {
     UPDATE: "updateUser",
+  },
+  // 
+  UPDATE: {
+    CREATE: "createUpdate",
+    UPDATE: "updateUpdate",
   }
 }

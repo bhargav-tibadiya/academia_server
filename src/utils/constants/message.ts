@@ -36,6 +36,7 @@ export const MESSAGES = {
   PASSWORD_MISMATCH: "The passwords do not match.",
   AGE_REQUIRES_OVER_18: "You must be over 18 years old to register.",
   INVALID_OTP: "OTP you've entered is incorrect",
+  INVALID_OBJECT_ID: "Object Id is Invalid.",
 
   // Rate Limiting
   TOO_MANY_REQUESTS: "You have made too many requests in a short period of time. Please try again later.",
