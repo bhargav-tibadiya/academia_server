@@ -6,12 +6,13 @@ export const MESSAGES = {
   USER_DELETED: "User has been deleted successfully.",
   USER_ALREADY_EXISTS: "User already exists in the database.",
   USER_NOT_FOUND: "No user found with the given information.",
-
+  
   // Data Message
   DATA_FETCHED: "Data fetched successfully.",
   DATA_CREATED: "Data created successfully.",
   DATA_UPDATED: "Data updated successfully.",
   DATA_DELETED: "Data deleted successfully.",
+  DATA_ALREADY_EXISTS: "Data already exists in the database.",
 
   // Action Message
   OPERATION_SUCCESSFUL: "Operation completed successfully.",

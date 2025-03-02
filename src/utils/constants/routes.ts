@@ -31,4 +31,12 @@ export const ROUTES = {
     UPDATE: "/:instituteId",
     DELETE: "/:instituteId",
   },
+  SUBJECT: {
+    BASE: "/subject",
+    GET: "/",
+    CREATE: "/",
+    GET_BY_ID: "/:subjectId",
+    UPDATE: "/:subjectId",
+    DELETE: "/:subjectId",
+  }
 }

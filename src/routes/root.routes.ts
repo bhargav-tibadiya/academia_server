@@ -6,8 +6,12 @@ import UserRouter from '@routes/user.routes'
 import AuthRouter from '@routes/auth.routes'
 import UpdateRouter from '@routes/update.routes'
 import InstituteRouter from '@routes/institute.routes'
+import SubjectRouter from '@routes/subject.routes'
 
-// Constants
+// Middleware
+import notFoundHandler from "@middleware/notfound";
+
+// Utils
 import { ROUTES } from "@utils/constants/routes";
 
 const router = Router();
@@ -16,5 +20,8 @@ router.use(ROUTES.AUTH.BASE, AuthRouter);
 router.use(ROUTES.USER.BASE, UserRouter);
 router.use(ROUTES.UPDATE.BASE, UpdateRouter);
 router.use(ROUTES.INSTITUTE.BASE, InstituteRouter);
+router.use(ROUTES.SUBJECT.BASE, SubjectRouter);
+
+router.all(ROUTES.ALL, notFoundHandler);
 
 export default router;

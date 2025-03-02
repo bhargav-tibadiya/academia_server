@@ -15,6 +15,10 @@ interface SchemaKeyType {
     CREATE: "createInstitute",
     UPDATE: "updateInstitute",
   },
+  SUBJECT: {
+    CREATE: "createSubject",
+    UPDATE: "updateSubject",
+  }
 }
 
 export const SCHEMAKEY: SchemaKeyType = {
@@ -37,5 +41,10 @@ export const SCHEMAKEY: SchemaKeyType = {
   INSTITUTE: {
     CREATE: "createInstitute",
     UPDATE: "updateInstitute",
+  },
+  // 
+  SUBJECT: {
+    CREATE: "createSubject",
+    UPDATE: "updateSubject",
   },
 }

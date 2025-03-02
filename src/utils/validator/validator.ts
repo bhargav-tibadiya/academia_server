@@ -153,6 +153,29 @@ const Validators = {
       "any.required": "Name is required",
     }),
   }),
+
+  // --> SUBJECT <--
+  createSubject: Joi.object({
+    name: Joi.string().required().messages({
+      "string.base": "Name must be a string",
+      "any.required": "Name is required",
+    }),
+    subjectCode: Joi.string().required().messages({
+      "string.base": "Subject Code must be a string",
+      "any.required": "Subject Code is required",
+    }),
+  }),
+
+  updateSubject: Joi.object({
+    name: Joi.string().required().messages({
+      "string.base": "Name must be a string",
+      "any.required": "Name is required",
+    }),
+    subjectCode: Joi.string().required().messages({
+      "string.base": "Subject Code must be a string",
+      "any.required": "Subject Code is required",
+    }),
+  }),
 }
 
 export default Validators
