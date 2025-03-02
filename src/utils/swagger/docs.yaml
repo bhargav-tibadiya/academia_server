@@ -22,8 +22,12 @@ info:
 tags:
   - name: Auth
     description: Authentication and session management for users.
-  - name: User
-    description: Management of user profiles and roles (students, faculty, admins).
+  - name: Attendance
+    description: Manage and update Attendance details of user.
+  - name: Class
+    description: Manage and update Class details.
+  - name: Department
+    description: Manage and update Department details.
   - name: Fees
     description: Handle student fees, payments, and financial records.
   - name: HallTicket
@@ -34,8 +38,10 @@ tags:
     description: Broadcast notifications to students and faculty.
   - name: Placement
     description: Manage placement processes, interviews, and job offers.
-  - name: ProfileRequest
-    description: Handle requests for profile updates and modifications.
+  - name: Profile
+    description: Manage Student profile updates and modifications.
+  - name: Request
+    description: Handle Request for updates and broadcast.
   - name: Result
     description: Manage student academic results and report cards.
   - name: Student
@@ -44,6 +50,8 @@ tags:
     description: Manage student and faculty timetables.
   - name: Update
     description: Manage updates related to classes, assignments, and events.
+  - name: User
+    description: Management of user profiles and roles (students, faculty, admins).
 
 components:
   securitySchemes:

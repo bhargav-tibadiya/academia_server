@@ -7,18 +7,30 @@ const AttendanceSchema = new Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
+      required: true,
+      index: true,
+      unique: true,
     },
-    attendance: [
+    attendanceRecords: [
       {
         date: {
           type: Date,
-          required: true
+          required: true,
+          index: true,
+        },
+        time: {
+          type: String,
+          required: true,
+        },
+        subjectId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Subject",
+          required: true,
         },
         status: {
           type: String,
           enum: ["Present", "Absent"],
-          required: true
+          required: true,
         },
       },
     ],
