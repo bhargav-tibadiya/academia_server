@@ -26,6 +26,8 @@ export const MESSAGES = {
   INVALID_INPUT: "The input provided is invalid. Please check and try again.",
   MISSING_REQUIRED_FIELDS: "Some required fields are missing from the request.",
   INVALID_TOKEN: "The provided token is invalid or expired.",
+  ROUTE_NOT_FOUND: "Route you are trying to access is not available",
+
 
   // Server Error Messages
   INTERNAL_SERVER_ERROR: "An unexpected error occurred on the server.",

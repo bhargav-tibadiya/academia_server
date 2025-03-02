@@ -18,7 +18,7 @@ info:
     - **Profile Requests**: Handle requests for updates to student profiles.
     - **Session Management**: Manage user sessions and authentication tokens for secure access.
 
-    This API supports the smooth operation of the Academia platform, making it easier for educational institutions to manage their students and academic processes in one integrated system.  
+    This API supports the smooth operation of the Academia platform, making it easier for educational institutions to manage their students and academic processes in one integrated system.
 tags:
   - name: Auth
     description: Authentication and session management for users.
@@ -54,8 +54,6 @@ components:
       bearerFormat: JWT
 
 # ----------->> AUTH <<----------
-
-# -----> AUTH.REGISTER <<-----
 paths:
   /api/v1/auth/signup:
     post:
@@ -127,7 +125,6 @@ paths:
                         type: string
                         example: "10"
 
-  # -----> AUTH.LOGIN <<-----
   /api/v1/auth/login:
     post:
       summary: Log in an existing user
@@ -193,7 +190,6 @@ paths:
                         type: string
                         example: "jwt_token"
 
-  # -----> AUTH.SEND_OTP <<-----
   /api/v1/auth/sendOtp:
     post:
       summary: Send verification OTP email to user
@@ -226,7 +222,6 @@ paths:
                     example: "OTP sent successfully."
 
   # ----------->> USER <<----------
-  # -----> USER.GET <<-----
   /api/v1/user:
     get:
       summary: Get all users
@@ -279,7 +274,6 @@ paths:
                           type: integer
                           example: 1
 
-  # -----> USER.GET BY ID<<-----
   /api/v1/user/{userId}:
     get:
       summary: Get User by userId
@@ -399,7 +393,6 @@ paths:
                         example: 1
 
   # ----------->> UPDATE <<----------
-  # -----> UPDATE.GET <<-----
   /api/v1/update:
     get:
       summary: Get all updates
@@ -732,6 +725,254 @@ paths:
       responses:
         200:
           description: Update deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+
+  # ----------->> INSTITUTE <<----------
+  # TODO Update departments fields when created
+  /api/v1/institute:
+    get:
+      summary: Get all institutes.
+      description: This endpoint allows you to get all institutes.
+      security:
+        - bearerAuth: []
+      tags:
+        - Institute
+      responses:
+        200:
+          description: Institutes has been Fetched successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Institutes has been Fetched successfully."
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "67c348a195dfd31b5ce579ec"
+                        name:
+                          type: string
+                          example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                        departments:
+                          type: array
+                          example: "[]"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T17:49:21.077Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T17:49:21.077Z"
+    post:
+      summary: Create Institute
+      description: This endpoint allows you to create a new institute
+      security:
+        - bearerAuth: []
+      tags:
+        - Institute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                departments:
+                  type: array
+                  example:
+                    ["60c72b2f9e1d4f20b8a5f0f9", "60c72b2f9e1d4f20b8a5hfh9"]
+                  items:
+                    type: string
+                    formate: objectId
+              required:
+                - name
+      responses:
+        201:
+          description: Institute created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c3f12fa78cdee267c52d1c"
+                      name:
+                        type: string
+                        example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                      departments:
+                        type: array
+                        example:
+                          [
+                            "60c72b2f9e1d4f20b8a5f0f9",
+                            "60c72b2f9e1d4f20b8a5hfh9",
+                          ]
+                        items:
+                          type: string
+                          formate: objectId
+
+  /api/v1/institute/{instituteId}:
+    get:
+      summary: Get institute by Id
+      description: This endpoint allows you to get institute by InstituteId.
+      security:
+        - bearerAuth: []
+      tags:
+        - Institute
+      responses:
+        200:
+          description: Institutes has been Fetched successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Institutes has been Fetched successfully."
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "67c348a195dfd31b5ce579ec"
+                        name:
+                          type: string
+                          example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                        departments:
+                          type: array
+                          example: "[]"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T17:49:21.077Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T17:49:21.077Z"
+    put:
+      summary: Update institute
+      description: This endpoint allows you to update a update using updateId
+      security:
+        - bearerAuth: []
+      tags:
+        - Institute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                departments:
+                  type: array
+                  example:
+                    ["60c72b2f9e1d4f20b8a5f0f9", "60c72b2f9e1d4f20b8a5hfh9"]
+                  items:
+                    type: string
+                    formate: objectId
+              required:
+                - name
+      responses:
+        201:
+          description: Institute created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c3f12fa78cdee267c52d1c"
+                      name:
+                        type: string
+                        example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                      departments:
+                        type: array
+                        example:
+                          [
+                            "60c72b2f9e1d4f20b8a5f0f9",
+                            "60c72b2f9e1d4f20b8a5hfh9",
+                          ]
+                        items:
+                          type: string
+                          formate: objectId
+    delete:
+      summary: Delete Institute
+      description: This institute allows you to delete a update using instituteId
+      security:
+        - bearerAuth: []
+      tags:
+        - Institute
+      responses:
+        200:
+          description: Institute deleted successfully
           content:
             application/json:
               schema:

@@ -10,7 +10,11 @@ interface SchemaKeyType {
   UPDATE: {
     CREATE: "createUpdate",
     UPDATE: "updateUpdate",
-  }
+  },
+  INSTITUTE: {
+    CREATE: "createInstitute",
+    UPDATE: "updateInstitute",
+  },
 }
 
 export const SCHEMAKEY: SchemaKeyType = {
@@ -28,5 +32,10 @@ export const SCHEMAKEY: SchemaKeyType = {
   UPDATE: {
     CREATE: "createUpdate",
     UPDATE: "updateUpdate",
-  }
+  },
+  // 
+  INSTITUTE: {
+    CREATE: "createInstitute",
+    UPDATE: "updateInstitute",
+  },
 }

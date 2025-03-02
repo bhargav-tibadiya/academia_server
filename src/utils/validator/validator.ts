@@ -137,7 +137,22 @@ const Validators = {
     tags: Joi.string().optional().messages({
       "string.base": "Tags must be a string",
     }),
-  })
+  }),
+
+  // --> INSTITUTE <--
+  createInstitute: Joi.object({
+    name: Joi.string().required().messages({
+      "string.base": "Name must be a string",
+      "any.required": "Name is required",
+    }),
+  }),
+
+  updateInstitute: Joi.object({
+    name: Joi.string().required().messages({
+      "string.base": "Name must be a string",
+      "any.required": "Name is required",
+    }),
+  }),
 }
 
 export default Validators

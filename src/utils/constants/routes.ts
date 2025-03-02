@@ -1,5 +1,6 @@
 export const ROUTES = {
   BASE: "/api/v1",
+  ALL: "*",
   DOCS: '/api/docs',
   AUTH: {
     BASE: '/auth',
@@ -21,5 +22,13 @@ export const ROUTES = {
     GET_BY_ID: "/:updateId",
     UPDATE: "/:updateId",
     DELETE: "/:updateId",
-  }
+  },
+  INSTITUTE: {
+    BASE: "/institute",
+    GET: "/",
+    CREATE: "/",
+    GET_BY_ID: "/:instituteId",
+    UPDATE: "/:instituteId",
+    DELETE: "/:instituteId",
+  },
 }
