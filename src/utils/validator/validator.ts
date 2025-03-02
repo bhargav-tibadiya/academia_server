@@ -85,6 +85,12 @@ const Validators = {
       "any.required": "Sender is required",
     }),
 
+    class: Joi.string().hex().length(24).required().messages({
+      "string.base": "Class must be a valid ObjectId",
+      "string.hex": "Class must be a valid ObjectId",
+      "any.required": "Class is required",
+    }),
+
     lastUpdated: Joi.date().required().messages({
       "date.base": "Last updated date must be a valid date",
       "any.required": "Last updated date is required",
@@ -115,6 +121,12 @@ const Validators = {
       "string.base": "Sender must be a valid ObjectId",
       "string.hex": "Sender must be a valid ObjectId",
       "any.required": "Sender is required",
+    }),
+
+    class: Joi.string().hex().length(24).required().messages({
+      "string.base": "Class must be a valid ObjectId",
+      "string.hex": "Class must be a valid ObjectId",
+      "any.required": "Class is required",
     }),
 
     lastUpdated: Joi.date().required().messages({

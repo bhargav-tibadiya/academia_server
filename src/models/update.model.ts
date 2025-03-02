@@ -21,6 +21,11 @@ const UpdateSchema = new Schema(
       ref: "User",
       required: true,
     },
+    class: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Class",
+      required: true,
+    },
     lastUpdated: {
       type: Date,
       required: true,

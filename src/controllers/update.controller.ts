@@ -1,8 +1,10 @@
 // Packages
+import mongoose from "mongoose";
 import { RequestHandler } from "express";
 
 // Models
 import Update from "@models/update.model";
+import Class from "@models/class.model";
 
 // Utils & Config
 import logger from "@services/logger";
@@ -12,14 +14,11 @@ import { responseCreator } from "@utils/helpers";
 import { STATUS } from "@utils/constants/status";
 import { MESSAGES } from "@utils/constants/message";
 import { ServerResponse } from "@interfaces/controllers";
-import mongoose from "mongoose";
 
 
 // Get All Updates & Get Update By ID
 export const getUpdates: RequestHandler = async (req, res: ServerResponse) => {
   const { updateId } = req.params;
-
-  console.log('updateId', updateId)
 
   try {
     if (updateId) {
@@ -62,6 +61,18 @@ export const createUpdate: RequestHandler = async (req, res: ServerResponse) => 
   try {
     const newUpdate = await Update.create(updateData);
     logger.info(`Created a new update: ${newUpdate._id}`);
+
+    const classToUpdate = await Class.findById(updateData.class);
+    if (!classToUpdate) {
+      logger.warn(`Class not found with ID: ${updateData.class}`);
+      res.status(STATUS.NOT_FOUND).json(responseCreator(STATUS.NOT_FOUND, MESSAGES.RESOURCE_NOT_FOUND, false));
+      return
+    }
+
+    classToUpdate.updates.push(newUpdate._id);
+    await classToUpdate.save();
+    logger.info(`Appended update ID to class: ${classToUpdate._id}`);
+
     res.status(STATUS.CREATED).json(responseCreator(STATUS.CREATED, MESSAGES.DATA_CREATED, true, newUpdate));
     return;
   } catch (error: any) {
@@ -117,8 +128,19 @@ export const deleteUpdate: RequestHandler = async (req, res: ServerResponse) => 
     if (!deletedUpdate) {
       logger.warn(`${MESSAGES.RESOURCE_NOT_FOUND}: ${updateId}`);
       res.status(STATUS.NOT_FOUND).json(responseCreator(STATUS.NOT_FOUND, MESSAGES.RESOURCE_NOT_FOUND, false));
+      return;
+    }
+
+    const classToUpdate = await Class.findOne({ updates: updateId });
+    if (!classToUpdate) {
+      logger.warn(`Class not found for update ID: ${updateId}`);
+      res.status(STATUS.NOT_FOUND).json(responseCreator(STATUS.NOT_FOUND, `Class not found for update ID: ${updateId}`, false));
       return
     }
+
+    classToUpdate.updates = classToUpdate.updates.filter(update => update.toString() !== updateId);
+    await classToUpdate.save();
+    logger.info(`Removed update ID from class: ${classToUpdate._id}`);
 
     logger.info(`Deleted update: ${updateId}`);
     res.status(STATUS.OK).json(responseCreator(STATUS.OK, MESSAGES.DATA_DELETED, true));

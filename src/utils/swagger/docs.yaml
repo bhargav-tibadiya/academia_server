@@ -1,8 +1,49 @@
 openapi: 3.0.0
 info:
-  title: Authentication API
+  title: Academia Backend API
   version: 1.0.0
-  description: API endpoints for user authentication
+  description: |
+    **Academia** is a comprehensive Student Information System that helps educational institutions manage various aspects of student life, academic progress, and institutional operations. This API serves as the backend of the Academia platform and provides essential endpoints for managing students, fees, timetables, results, notifications, placements, and more.
+
+    The **Academia Backend API** provides functionalities for:
+    - **User Management**: Register, authenticate, and manage student, faculty, and admin users.
+    - **Student Management**: View, update, and manage student profiles, including personal details and academic records.
+    - **Fees Management**: Handle fee structure, payments, and financial records.
+    - **Hall Tickets**: Generate hall tickets for students for exams.
+    - **Institute Management**: Manage institute details, courses, and departments.
+    - **Notifications**: Broadcast important notifications to students, staff, and faculty.
+    - **Placement**: Track and manage student placements, interviews, and job offers.
+    - **Result Management**: Manage student academic results, grades, and report cards.
+    - **Timetable Management**: View and manage timetables for students and staff.
+    - **Profile Requests**: Handle requests for updates to student profiles.
+    - **Session Management**: Manage user sessions and authentication tokens for secure access.
+
+    This API supports the smooth operation of the Academia platform, making it easier for educational institutions to manage their students and academic processes in one integrated system.  
+tags:
+  - name: Auth
+    description: Authentication and session management for users.
+  - name: User
+    description: Management of user profiles and roles (students, faculty, admins).
+  - name: Fees
+    description: Handle student fees, payments, and financial records.
+  - name: HallTicket
+    description: Generation and management of hall tickets for exams.
+  - name: Institute
+    description: Manage institute and course-related details.
+  - name: Notification
+    description: Broadcast notifications to students and faculty.
+  - name: Placement
+    description: Manage placement processes, interviews, and job offers.
+  - name: ProfileRequest
+    description: Handle requests for profile updates and modifications.
+  - name: Result
+    description: Manage student academic results and report cards.
+  - name: Student
+    description: Manage student records, details, and academic progress.
+  - name: Timetable
+    description: Manage student and faculty timetables.
+  - name: Update
+    description: Manage updates related to classes, assignments, and events.
 
 components:
   securitySchemes:
@@ -19,8 +60,7 @@ paths:
   /api/v1/auth/signup:
     post:
       summary: Register a new user
-      security:
-        - bearerAuth: []
+      description: This endpoint allows you to register a new user
       tags:
         - Auth
       requestBody:
@@ -91,6 +131,7 @@ paths:
   /api/v1/auth/login:
     post:
       summary: Log in an existing user
+      description: This endpoint allows you to authenticate user
       tags:
         - Auth
       requestBody:
@@ -156,6 +197,7 @@ paths:
   /api/v1/auth/sendOtp:
     post:
       summary: Send verification OTP email to user
+      description: This endpoint allows you to send a verification OTP to a user while registration.
       tags:
         - Auth
       requestBody:
@@ -185,9 +227,10 @@ paths:
 
   # ----------->> USER <<----------
   # -----> USER.GET <<-----
-  /api/v1/user/:
+  /api/v1/user:
     get:
       summary: Get all users
+      description: This endpoint allows you to get list of all user.
       security:
         - bearerAuth: []
       tags:
@@ -240,6 +283,7 @@ paths:
   /api/v1/user/{userId}:
     get:
       summary: Get User by userId
+      description: This endpoint allows you to get user based on userId.
       security:
         - bearerAuth: []
       tags:
@@ -287,6 +331,7 @@ paths:
                         example: 1
     put:
       summary: Update User by userId
+      description: This endpoint allows you to update user based on userId.
       security:
         - bearerAuth: []
       tags:
@@ -352,3 +397,354 @@ paths:
                       userId:
                         type: integer
                         example: 1
+
+  # ----------->> UPDATE <<----------
+  # -----> UPDATE.GET <<-----
+  /api/v1/update:
+    get:
+      summary: Get all updates
+      description: This endpoint allows you to get all updates.
+      security:
+        - bearerAuth: []
+      tags:
+        - Update
+      responses:
+        200:
+          description: Updates has been Fetched successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Updates has been Fetched successfully."
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "67c348a195dfd31b5ce579ec"
+                        date:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+                        title:
+                          type: string
+                          example: "MYSY Scholarship"
+                        description:
+                          type: string
+                          example: "description about update"
+                        sender:
+                          type: string
+                          example: "67c09a33191a741be80f8f47"
+                        class:
+                          type: string
+                          example: "67c09a33191a741be80f8f47"
+                        lastUpdated:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+                        tags:
+                          type: string
+                          example: "Scholarships-MYSY"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T17:49:21.077Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T17:49:21.077Z"
+    post:
+      summary: Create Update
+      description: This endpoint allows you to create a new update
+      security:
+        - bearerAuth: []
+      tags:
+        - Update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                  example: "2025-07-15"
+                title:
+                  type: string
+                  example: "Engineering 404 - Project Presentation Dates"
+                description:
+                  type: string
+                  example: "Description"
+                sender:
+                  type: string
+                  example: "67c09a0c191a0f8f3f0f8f3f"
+                class:
+                  type: string
+                  example: "67c09a0c191a0f8f3f0f8f3f"
+                lastUpdated:
+                  type: string
+                  format: date
+                  example: "2025-04-15"
+                tags:
+                  type: string
+                  example: "Engineering 404, Project, Presentation"
+              required:
+                - date
+                - title
+                - description
+                - sender
+                - class
+                - lastUpdated
+                - tags
+      responses:
+        201:
+          description: Notification created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c3f12fa78cdee267c52d1c"
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-07-15T00:00:00.000Z"
+                      title:
+                        type: string
+                        example: "Engineering 404 - Project Presentation Dates"
+                      description:
+                        type: string
+                        example: "The presentation dates for Engineering 404 have been finalized. Presentations will take place from July 20th to July 25th. Please check the course portal for your scheduled date and time."
+                      sender:
+                        type: string
+                        example: "67c09a0c191a741be80f8f3f"
+                      lastUpdated:
+                        type: string
+                        format: date-time
+                        example: "2025-04-15T00:00:00.000Z"
+                      tags:
+                        type: string
+                        example: "Engineering 404, Project, Presentation"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T05:48:31.773Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T05:48:31.773Z"
+
+  /api/v1/update/{updateId}:
+    get:
+      summary: Get update by Id
+      description: This endpoint allows you to get update by UpdateId.
+      security:
+        - bearerAuth: []
+      tags:
+        - Update
+      responses:
+        200:
+          description: Updates has been Fetched successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Updates has been Fetched successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c348a195dfd31b5ce579ec"
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      title:
+                        type: string
+                        example: "MYSY Scholarship"
+                      description:
+                        type: string
+                        example: "description about update"
+                      sender:
+                        type: string
+                        example: "67c09a33191a741be80f8f47"
+                      class:
+                        type: string
+                        example: "67c09a33191a741be80f8f47"
+                      lastUpdated:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      tags:
+                        type: string
+                        example: "Scholarships-MYSY"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T17:49:21.077Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T17:49:21.077Z"
+    put:
+      summary: Update update
+      description: This endpoint allows you to update a update using updateId
+      security:
+        - bearerAuth: []
+      tags:
+        - Update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                  example: "2025-07-15"
+                title:
+                  type: string
+                  example: "Engineering 404 - Project Presentation Dates"
+                description:
+                  type: string
+                  example: "Description"
+                sender:
+                  type: string
+                  example: "67c09a0c191a0f8f3f0f8f3f"
+                class:
+                  type: string
+                  example: "67c09a0c191a0f8f3f0f8f3f"
+                lastUpdated:
+                  type: string
+                  format: date
+                  example: "2025-04-15"
+                tags:
+                  type: string
+                  example: "Engineering 404, Project, Presentation"
+              required:
+                - date
+                - title
+                - description
+                - sender
+                - class
+                - lastUpdated
+                - tags
+      responses:
+        200:
+          description: Notification edited successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data edited successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c3f12fa78cdee267c52d1c"
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-07-15T00:00:00.000Z"
+                      title:
+                        type: string
+                        example: "Engineering 404 - Project Presentation Dates"
+                      description:
+                        type: string
+                        example: "The presentation dates for Engineering 404 have been finalized. Presentations will take place from July 20th to July 25th. Please check the course portal for your scheduled date and time."
+                      sender:
+                        type: string
+                        example: "67c09a0c191a741be80f8f3f"
+                      class:
+                        type: string
+                        example: "67c09a0c191a741be80f8f3f"
+                      lastUpdated:
+                        type: string
+                        format: date-time
+                        example: "2025-04-15T00:00:00.000Z"
+                      tags:
+                        type: string
+                        example: "Engineering 404, Project, Presentation"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T05:48:31.773Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T05:48:31.773Z"
+    delete:
+      summary: Delete update
+      description: This endpoint allows you to delete a update using updateId
+      security:
+        - bearerAuth: []
+      tags:
+        - Update
+      responses:
+        200:
+          description: Update deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object

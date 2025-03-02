@@ -1,18 +1,23 @@
 export const MESSAGES = {
-  // Success Messages
+  // User Message
   USER_FETCHED: "User has been Fetched successfully.",
   USER_CREATED: "User has been created successfully.",
   USER_UPDATED: "User has been updated successfully.",
   USER_DELETED: "User has been deleted successfully.",
-  OPERATION_SUCCESSFUL: "Operation completed successfully.",
+  USER_ALREADY_EXISTS: "User already exists in the database.",
+  USER_NOT_FOUND: "No user found with the given information.",
+
+  // Data Message
   DATA_FETCHED: "Data fetched successfully.",
   DATA_CREATED: "Data created successfully.",
   DATA_UPDATED: "Data updated successfully.",
   DATA_DELETED: "Data deleted successfully.",
+
+  // Action Message
+  OPERATION_SUCCESSFUL: "Operation completed successfully.",
   USER_AUTHENTICATED: "User authenticated successfully",
 
   // Client Error Messages
-  USER_ALREADY_EXISTS: "User already exists in the database.",
   INVALID_CREDENTIALS: "The credentials provided are invalid.",
   UNAUTHORIZED_ACCESS: "Unauthorized access, please login.",
   FORBIDDEN: "You do not have permission to access this resource.",
@@ -21,7 +26,6 @@ export const MESSAGES = {
   INVALID_INPUT: "The input provided is invalid. Please check and try again.",
   MISSING_REQUIRED_FIELDS: "Some required fields are missing from the request.",
   INVALID_TOKEN: "The provided token is invalid or expired.",
-  USER_NOT_FOUND: "No user found with the given information.",
 
   // Server Error Messages
   INTERNAL_SERVER_ERROR: "An unexpected error occurred on the server.",
