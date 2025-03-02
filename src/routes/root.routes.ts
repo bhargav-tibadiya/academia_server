@@ -7,6 +7,7 @@ import AuthRouter from '@routes/auth.routes'
 import UpdateRouter from '@routes/update.routes'
 import InstituteRouter from '@routes/institute.routes'
 import SubjectRouter from '@routes/subject.routes'
+import AttendanceRouter from '@routes/attendance.routes'
 
 // Middleware
 import notFoundHandler from "@middleware/notfound";
@@ -21,6 +22,7 @@ router.use(ROUTES.USER.BASE, UserRouter);
 router.use(ROUTES.UPDATE.BASE, UpdateRouter);
 router.use(ROUTES.INSTITUTE.BASE, InstituteRouter);
 router.use(ROUTES.SUBJECT.BASE, SubjectRouter);
+router.use(ROUTES.ATTENDANCE.BASE, AttendanceRouter);
 
 router.all(ROUTES.ALL, notFoundHandler);
 

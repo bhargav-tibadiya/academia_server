@@ -18,7 +18,12 @@ interface SchemaKeyType {
   SUBJECT: {
     CREATE: "createSubject",
     UPDATE: "updateSubject",
-  }
+  },
+  ATTENDANCE: {
+    CREATE: "createAttendance",
+    UPDATE: "updateAttendance",
+    ADD_RECORD: "addAttendanceRecord",
+  },
 }
 
 export const SCHEMAKEY: SchemaKeyType = {
@@ -46,5 +51,11 @@ export const SCHEMAKEY: SchemaKeyType = {
   SUBJECT: {
     CREATE: "createSubject",
     UPDATE: "updateSubject",
+  },
+  // 
+  ATTENDANCE: {
+    CREATE: "createAttendance",
+    UPDATE: "updateAttendance",
+    ADD_RECORD: "addAttendanceRecord",
   },
 }

@@ -176,6 +176,61 @@ const Validators = {
       "any.required": "Subject Code is required",
     }),
   }),
+
+  // --> ATTENDANCE <--
+  createAttendance: Joi.object({
+    userId: Joi.string().required().messages({
+      "string.base": "User ID must be a string",
+      "any.required": "User ID is required",
+    })
+  }),
+
+  updateAttendance: Joi.object({
+    attendanceRecords: Joi.array().items(
+      Joi.object({
+        date: Joi.date().required().messages({
+          "date.base": "Date must be a valid date",
+          "any.required": "Date is required",
+        }),
+        time: Joi.string().required().messages({
+          "string.base": "Time must be a string",
+          "any.required": "Time is required",
+        }),
+        subjectId: Joi.string().required().messages({
+          "string.base": "Subject ID must be a string",
+          "any.required": "Subject ID is required",
+        }),
+        status: Joi.string().valid("Present", "Absent").required().messages({
+          "string.base": "Status must be a string",
+          "any.required": "Status is required",
+          "any.only": "Status must be either 'Present' or 'Absent'",
+        }),
+      })
+    ).required().messages({
+      "array.base": "Attendance records must be an array",
+      "any.required": "Attendance records are required",
+    }),
+  }),
+
+  addAttendanceRecord: Joi.object({
+    date: Joi.date().required().messages({
+      "date.base": "Date must be a valid date",
+      "any.required": "Date is required",
+    }),
+    time: Joi.string().required().messages({
+      "string.base": "Time must be a string",
+      "any.required": "Time is required",
+    }),
+    subjectId: Joi.string().required().messages({
+      "string.base": "Subject ID must be a string",
+      "any.required": "Subject ID is required",
+    }),
+    status: Joi.string().valid("Present", "Absent").required().messages({
+      "string.base": "Status must be a string",
+      "any.required": "Status is required",
+      "any.only": "Status must be either 'Present' or 'Absent'",
+    }),
+  }),
 }
 
 export default Validators
