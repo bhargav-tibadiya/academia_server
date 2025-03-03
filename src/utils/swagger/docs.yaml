@@ -46,6 +46,8 @@ tags:
     description: Manage student academic results and report cards.
   - name: Student
     description: Manage student records, details, and academic progress.
+  - name: Subject
+    description: Manage subject records, details.
   - name: Timetable
     description: Manage student and faculty timetables.
   - name: Update
@@ -981,6 +983,246 @@ paths:
       responses:
         200:
           description: Institute deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+
+  # ----------->> SUBJECT <<----------
+  /api/v1/subject:
+    get:
+      summary: Get all subjects
+      description: This endpoint allows you to get all subjects.
+      security:
+        - bearerAuth: []
+      tags:
+        - Subject
+      responses:
+        200:
+          description: Data fetched successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Data fetched successfully.
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "67c48aabc7daf5f6ecb7fdd2"
+                        name:
+                          type: string
+                          example: "Object Oriented Programming in Java"
+                        subjectCode:
+                          type: string
+                          example: "IT-2014"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-02T16:43:23.676Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-02T16:43:23.676Z"
+    post:
+      summary: Create Subject
+      description: This endpoint allows you to create a new subject
+      security:
+        - bearerAuth: []
+      tags:
+        - Subject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - subjectCode
+              properties:
+                name:
+                  type: string
+                  example: "Introduction To Cyber Security"
+                subjectCode:
+                  type: string
+                  example: "IT-2001"
+      responses:
+        201:
+          description: Data created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: "Object Oriented Programming in C++"
+                      subjectCode:
+                        type: string
+                        example: "IT-2015"
+                      _id:
+                        type: string
+                        example: "67c48ab7c7daf5f6ecb7fdd4"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T16:43:35.106Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T16:43:35.106Z"
+  /api/v1/subject/{subjectId}:
+    get:
+      summary: Get Subject by Id
+      description: This endpoint allows you to get subject by SubjectId.
+      security:
+        - bearerAuth: []
+      tags:
+        - Subject
+      responses:
+        200:
+          description: Data fetched successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Data fetched successfully.
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c48aabc7daf5f6ecb7fdd2"
+                      name:
+                        type: string
+                        example: "Object Oriented Programming in Java"
+                      subjectCode:
+                        type: string
+                        example: "IT-2014"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T16:43:23.676Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T16:43:23.676Z"
+    put:
+      summary: Update Subject
+      description: This endpoint allows you to Update a subject
+      security:
+        - bearerAuth: []
+      tags:
+        - Subject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - subjectCode
+              properties:
+                name:
+                  type: string
+                  example: "Introduction To Cyber Security"
+                subjectCode:
+                  type: string
+                  example: "IT-2001"
+      responses:
+        200:
+          description: Data Updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: "Object Oriented Programming in C++"
+                      subjectCode:
+                        type: string
+                        example: "IT-2015"
+                      _id:
+                        type: string
+                        example: "67c48ab7c7daf5f6ecb7fdd4"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T16:43:35.106Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T16:43:35.106Z"
+    delete:
+      summary: Delete Subject
+      description: This endpoint allows you to delete a subject using subjectId
+      security:
+        - bearerAuth: []
+      tags:
+        - Subject
+      responses:
+        200:
+          description: Subject deleted successfully
           content:
             application/json:
               schema:
