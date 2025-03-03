@@ -134,7 +134,6 @@ paths:
                       userId:
                         type: string
                         example: "10"
-
   /api/v1/auth/login:
     post:
       summary: Log in an existing user
@@ -199,7 +198,6 @@ paths:
                       token:
                         type: string
                         example: "jwt_token"
-
   /api/v1/auth/sendOtp:
     post:
       summary: Send verification OTP email to user
@@ -283,7 +281,6 @@ paths:
                         userId:
                           type: integer
                           example: 1
-
   /api/v1/user/{userId}:
     get:
       summary: Get User by userId
@@ -292,6 +289,14 @@ paths:
         - bearerAuth: []
       tags:
         - User
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       responses:
         200:
           description: User has been Fetched successfully.
@@ -340,6 +345,14 @@ paths:
         - bearerAuth: []
       tags:
         - User
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       requestBody:
         description: Update user details.
         content:
@@ -563,7 +576,6 @@ paths:
                         type: string
                         format: date-time
                         example: "2025-03-02T05:48:31.773Z"
-
   /api/v1/update/{updateId}:
     get:
       summary: Get update by Id
@@ -572,6 +584,14 @@ paths:
         - bearerAuth: []
       tags:
         - Update
+      parameters:
+        - name: updateId
+          in: path
+          required: true
+          description: ID of the update
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       responses:
         200:
           description: Updates has been Fetched successfully.
@@ -633,6 +653,14 @@ paths:
         - bearerAuth: []
       tags:
         - Update
+      parameters:
+        - name: updateId
+          in: path
+          required: true
+          description: ID of the update
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       requestBody:
         required: true
         content:
@@ -732,6 +760,14 @@ paths:
         - bearerAuth: []
       tags:
         - Update
+      parameters:
+        - name: updateId
+          in: path
+          required: true
+          description: ID of the update
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       responses:
         200:
           description: Update deleted successfully
@@ -863,7 +899,6 @@ paths:
                         items:
                           type: string
                           formate: objectId
-
   /api/v1/institute/{instituteId}:
     get:
       summary: Get institute by Id
@@ -872,6 +907,14 @@ paths:
         - bearerAuth: []
       tags:
         - Institute
+      parameters:
+        - name: instituteId
+          in: path
+          required: true
+          description: ID of the institute
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       responses:
         200:
           description: Institutes has been Fetched successfully.
@@ -918,6 +961,14 @@ paths:
         - bearerAuth: []
       tags:
         - Institute
+      parameters:
+        - name: instituteId
+          in: path
+          required: true
+          description: ID of the institute
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       requestBody:
         required: true
         content:
@@ -980,6 +1031,14 @@ paths:
         - bearerAuth: []
       tags:
         - Institute
+      parameters:
+        - name: instituteId
+          in: path
+          required: true
+          description: ID of the institute
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       responses:
         200:
           description: Institute deleted successfully
@@ -1116,6 +1175,14 @@ paths:
         - bearerAuth: []
       tags:
         - Subject
+      parameters:
+        - name: subjectId
+          in: path
+          required: true
+          description: ID of the subject
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       responses:
         200:
           description: Data fetched successfully.
@@ -1160,6 +1227,14 @@ paths:
         - bearerAuth: []
       tags:
         - Subject
+      parameters:
+        - name: subjectId
+          in: path
+          required: true
+          description: ID of the subject
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       requestBody:
         required: true
         content:
@@ -1220,6 +1295,14 @@ paths:
         - bearerAuth: []
       tags:
         - Subject
+      parameters:
+        - name: subjectId
+          in: path
+          required: true
+          description: ID of the subject
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
       responses:
         200:
           description: Subject deleted successfully
@@ -1239,3 +1322,481 @@ paths:
                     example: true
                   data:
                     type: object
+
+  # ----------->> ATTENDANCE <<----------
+  /api/v1/attendance:
+    get:
+      summary: Get all Attendance
+      description: This endpoint allows you to get all Attendance.
+      security:
+        - bearerAuth: []
+      tags:
+        - Attendance
+      responses:
+        "200":
+          description: Data fetched successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "67c5d4295baf78fdded2f358"
+                        userId:
+                          type: string
+                          example: "67c0aa3db1c6a62b266448d9"
+                        attendanceRecords:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              _id:
+                                type: string
+                                example: "67c5d5b21400c9c728bf624b"
+                              date:
+                                type: string
+                                format: date-time
+                                example: "2025-03-02T00:00:00.000Z"
+                              time:
+                                type: string
+                                example: "04-30"
+                              status:
+                                type: string
+                                example: "Present"
+                              subjectId:
+                                type: object
+                                properties:
+                                  _id:
+                                    type: string
+                                    example: "67c48ae5c7daf5f6ecb7fdd8"
+                                  name:
+                                    type: string
+                                    example: "Introduction To Cyber Security"
+                                  subjectCode:
+                                    type: string
+                                    example: "IT-2001"
+                                  createdAt:
+                                    type: string
+                                    format: date-time
+                                    example: "2025-03-02T16:44:21.173Z"
+                                  updatedAt:
+                                    type: string
+                                    format: date-time
+                                    example: "2025-03-02T16:44:21.173Z"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-03T16:09:13.052Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-03T16:15:46.544Z"
+    post:
+      summary: Create Attendance
+      description: This endpoint allows you to create a new attendance
+      security:
+        - bearerAuth: []
+      tags:
+        - Attendance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+              properties:
+                userId:
+                  type: string
+                  example: "67c0aa3db1c6a62b266448d9"
+      responses:
+        201:
+          description: Data created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                        example: "67c0aa3db1c6a62b266448d9"
+                      attendanceRecords:
+                        type: array
+                        items: {}
+                        example: []
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-03T16:09:13.052Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-03T16:09:13.052Z"
+  /api/v1/attendance/{attendanceId}:
+    get:
+      summary: Get Attendance by Id
+      description: This endpoint allows you to get attendance by AttendanceId.
+      security:
+        - bearerAuth: []
+      tags:
+        - Attendance
+      parameters:
+        - name: attendanceId
+          in: path
+          required: true
+          description: ID of the attendance
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Data fetched successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      userId:
+                        type: string
+                        example: "67c0aa3db1c6a62b266448d9"
+                      attendanceRecords:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: "67c5d5b21400c9c728bf624b"
+                            date:
+                              type: string
+                              format: date-time
+                              example: "2025-03-02T00:00:00.000Z"
+                            time:
+                              type: string
+                              example: "04-30"
+                            status:
+                              type: string
+                              example: "Present"
+                            subjectId:
+                              type: object
+                              properties:
+                                _id:
+                                  type: string
+                                  example: "67c48ae5c7daf5f6ecb7fdd8"
+                                name:
+                                  type: string
+                                  example: "Introduction To Cyber Security"
+                                subjectCode:
+                                  type: string
+                                  example: "IT-2001"
+                                createdAt:
+                                  type: string
+                                  format: date-time
+                                  example: "2025-03-02T16:44:21.173Z"
+                                updatedAt:
+                                  type: string
+                                  format: date-time
+                                  example: "2025-03-02T16:44:21.173Z"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-03T16:09:13.052Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-03T16:15:46.544Z"
+    put:
+      summary: Update attendance records
+      security:
+        - bearerAuth: []
+      tags:
+        - Attendance
+      parameters:
+        - name: attendanceId
+          in: path
+          required: true
+          description: ID of the attendance
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attendanceRecords:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-01-02T00:00:00.000Z"
+                      time:
+                        type: string
+                        example: "10-30"
+                      subjectId:
+                        type: string
+                        example: "67c48ae5c7daf5f6ecb7fdd8"
+                      status:
+                        type: string
+                        example: "Absent"
+              required:
+                - attendanceRecords
+      responses:
+        200:
+          description: Attendance records updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data updated successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c48645f44671bdd06f0e47"
+                      userId:
+                        type: string
+                        example: "67c09a33191a741be80f8f47"
+                      attendanceRecords:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: "67c48fe7a5765c0d9bf5813e"
+                            date:
+                              type: string
+                              format: date-time
+                              example: "2025-01-02T00:00:00.000Z"
+                            time:
+                              type: string
+                              example: "10-30"
+                            status:
+                              type: string
+                              example: "Absent"
+                            subjectId:
+                              type: string
+                              example: "67c48ae5c7daf5f6ecb7fdd8"
+                            subject:
+                              type: object
+                              properties:
+                                _id:
+                                  type: string
+                                  example: "67c48ae5c7daf5f6ecb7fdd8"
+                                name:
+                                  type: string
+                                  example: "Introduction To Cyber Security"
+                                subjectCode:
+                                  type: string
+                                  example: "IT-2001"
+                                createdAt:
+                                  type: string
+                                  format: date-time
+                                  example: "2025-03-02T16:44:21.173Z"
+                                updatedAt:
+                                  type: string
+                                  format: date-time
+                                  example: "2025-03-02T16:44:21.173Z"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T16:24:37.465Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T17:05:43.155Z"
+    delete:
+      summary: Delete Attendance
+      description: This endpoint allows you to delete a Attendance using AttendanceId
+      security:
+        - bearerAuth: []
+      tags:
+        - Attendance
+      parameters:
+        - name: attendanceId
+          in: path
+          required: true
+          description: ID of the attendance
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Attendance deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+  /api/v1/attendance/{attendanceId}/add:
+    post:
+      summary: Add a new attendance record
+      description: This endpoint allows you to add a Attendance record
+      security:
+        - bearerAuth: []
+      tags:
+        - Attendance
+      parameters:
+        - name: attendanceId
+          in: path
+          required: true
+          description: ID of the attendance record to add a new entry
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                  example: "2025-03-02"
+                time:
+                  type: string
+                  example: "04-30"
+                subjectId:
+                  type: string
+                  example: "67c48ae5c7daf5f6ecb7fdd8"
+                status:
+                  type: string
+                  example: "Present"
+              required:
+                - date
+                - time
+                - subjectId
+                - status
+      responses:
+        201:
+          description: Attendance record created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      userId:
+                        type: string
+                        example: "67c0aa3db1c6a62b266448d9"
+                      attendanceRecords:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: "67c5d5b21400c9c728bf624b"
+                            date:
+                              type: string
+                              format: date-time
+                              example: "2025-03-02T00:00:00.000Z"
+                            time:
+                              type: string
+                              example: "04-30"
+                            status:
+                              type: string
+                              example: "Present"
+                            subjectId:
+                              type: string
+                              example: "67c48ae5c7daf5f6ecb7fdd8"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-03T16:09:13.052Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-03T16:15:46.544Z"
+                      __v:
+                        type: integer
+                        example: 1
