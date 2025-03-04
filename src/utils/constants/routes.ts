@@ -48,4 +48,12 @@ export const ROUTES = {
     UPDATE: "/:attendanceId",
     DELETE: "/:attendanceId",
   },
+  PROFILE: {
+    BASE: "/profile",
+    GET: "/",
+    CREATE: "/",
+    GET_BY_ID: "/:profileId",
+    UPDATE: "/:profileId",
+    DELETE: "/:profileId",
+  },
 }

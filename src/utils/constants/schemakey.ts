@@ -24,6 +24,10 @@ interface SchemaKeyType {
     UPDATE: "updateAttendance",
     ADD_RECORD: "addAttendanceRecord",
   },
+  PROFILE: {
+    CREATE: "createProfile",
+    UPDATE: "updateProfile",
+  },
 }
 
 export const SCHEMAKEY: SchemaKeyType = {
@@ -57,5 +61,10 @@ export const SCHEMAKEY: SchemaKeyType = {
     CREATE: "createAttendance",
     UPDATE: "updateAttendance",
     ADD_RECORD: "addAttendanceRecord",
+  },
+  // 
+  PROFILE: {
+    CREATE: "createProfile",
+    UPDATE: "updateProfile",
   },
 }

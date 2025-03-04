@@ -8,6 +8,7 @@ import UpdateRouter from '@routes/update.routes'
 import InstituteRouter from '@routes/institute.routes'
 import SubjectRouter from '@routes/subject.routes'
 import AttendanceRouter from '@routes/attendance.routes'
+import ProfileRouter from '@routes/profile.routes'
 
 // Middleware
 import notFoundHandler from "@middleware/notfound";
@@ -23,6 +24,7 @@ router.use(ROUTES.UPDATE.BASE, UpdateRouter);
 router.use(ROUTES.INSTITUTE.BASE, InstituteRouter);
 router.use(ROUTES.SUBJECT.BASE, SubjectRouter);
 router.use(ROUTES.ATTENDANCE.BASE, AttendanceRouter);
+router.use(ROUTES.PROFILE.BASE, ProfileRouter);
 
 router.all(ROUTES.ALL, notFoundHandler);
 
