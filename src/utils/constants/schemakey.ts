@@ -28,6 +28,10 @@ interface SchemaKeyType {
     CREATE: "createProfile",
     UPDATE: "updateProfile",
   },
+  FEES: {
+    CREATE: "createFees",
+    UPDATE: "updateFees",
+  },
 }
 
 export const SCHEMAKEY: SchemaKeyType = {
@@ -66,5 +70,10 @@ export const SCHEMAKEY: SchemaKeyType = {
   PROFILE: {
     CREATE: "createProfile",
     UPDATE: "updateProfile",
+  },
+  // 
+  FEES: {
+    CREATE: "createFees",
+    UPDATE: "updateFees",
   },
 }

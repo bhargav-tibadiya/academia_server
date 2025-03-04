@@ -9,6 +9,7 @@ import InstituteRouter from '@routes/institute.routes'
 import SubjectRouter from '@routes/subject.routes'
 import AttendanceRouter from '@routes/attendance.routes'
 import ProfileRouter from '@routes/profile.routes'
+import FeesRouter from '@routes/fees.route'
 
 // Middleware
 import notFoundHandler from "@middleware/notfound";
@@ -25,6 +26,7 @@ router.use(ROUTES.INSTITUTE.BASE, InstituteRouter);
 router.use(ROUTES.SUBJECT.BASE, SubjectRouter);
 router.use(ROUTES.ATTENDANCE.BASE, AttendanceRouter);
 router.use(ROUTES.PROFILE.BASE, ProfileRouter);
+router.use(ROUTES.FEES.BASE, FeesRouter);
 
 router.all(ROUTES.ALL, notFoundHandler);
 

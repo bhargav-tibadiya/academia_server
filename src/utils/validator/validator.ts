@@ -411,6 +411,81 @@ const Validators = {
       "string.pattern.base": "Mother's Contact must be a valid 10-digit number",
     }),
   }),
+
+  // --> FEES <--
+  createFees: Joi.object({
+    semester: Joi.number().required().messages({
+      "number.base": "Semester must be a number",
+      "any.required": "Semester is required",
+    }),
+
+    date: Joi.date().required().messages({
+      "date.base": "Date must be a valid date",
+      "any.required": "Date is required",
+    }),
+
+    amount: Joi.number().required().messages({
+      "number.base": "Amount must be a number",
+      "any.required": "Amount is required",
+    }),
+
+    fine: Joi.number().required().messages({
+      "number.base": "Fine must be a number",
+      "any.required": "Fine is required",
+    }),
+
+    status: Joi.string().valid("paid", "unpaid").required().messages({
+      "string.base": "Status must be a string",
+      "any.required": "Status is required",
+      "any.only": "Status must be either 'paid' or 'unpaid'",
+    }),
+
+    paidDate: Joi.date().optional().messages({
+      "date.base": "Paid Date must be a valid date",
+    }),
+
+    mode: Joi.string().required().messages({
+      "string.base": "Mode must be a string",
+      "any.required": "Mode is required",
+    }),
+  }),
+
+  updateFees: Joi.object({
+    semester: Joi.number().required().messages({
+      "number.base": "Semester must be a number",
+      "any.required": "Semester is required",
+    }),
+
+    date: Joi.date().required().messages({
+      "date.base": "Date must be a valid date",
+      "any.required": "Date is required",
+    }),
+
+    amount: Joi.number().required().messages({
+      "number.base": "Amount must be a number",
+      "any.required": "Amount is required",
+    }),
+
+    fine: Joi.number().required().messages({
+      "number.base": "Fine must be a number",
+      "any.required": "Fine is required",
+    }),
+
+    status: Joi.string().valid("paid", "unpaid").required().messages({
+      "string.base": "Status must be a string",
+      "any.required": "Status is required",
+      "any.only": "Status must be either 'paid' or 'unpaid'",
+    }),
+
+    paidDate: Joi.date().optional().messages({
+      "date.base": "Paid Date must be a valid date",
+    }),
+
+    mode: Joi.string().required().messages({
+      "string.base": "Mode must be a string",
+      "any.required": "Mode is required",
+    }),
+  })
 }
 
 export default Validators
