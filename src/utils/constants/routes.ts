@@ -64,4 +64,12 @@ export const ROUTES = {
     UPDATE: "/:feeId",
     DELETE: "/:feeId",
   },
+  HALLTICKET: {
+    BASE: "/hallticket",
+    GET: "/",
+    CREATE: "/",
+    GET_BY_ID: "/:hallticketId",
+    UPDATE: "/:hallticketId",
+    DELETE: "/:hallticketId",
+  },
 }
