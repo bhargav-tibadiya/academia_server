@@ -11,7 +11,7 @@ import { responseCreator } from "@utils/helpers";
 // Types & Constants
 import { STATUS } from "@utils/constants/status";
 import { MESSAGES } from "@utils/constants/message";
-import { ServerResponse } from "@interfaces/controllers";
+import { CreateSubjectRequest, ServerResponse, UpdateSubjectRequest } from "@interfaces/controllers";
 
 // Get All Subjects & Get Subject By ID
 export const getSubjects: RequestHandler = async (req, res: ServerResponse) => {
@@ -49,7 +49,7 @@ export const getSubjects: RequestHandler = async (req, res: ServerResponse) => {
 };
 
 // Create a Subject
-export const createSubject: RequestHandler = async (req, res: ServerResponse) => {
+export const createSubject: RequestHandler = async (req: CreateSubjectRequest, res: ServerResponse) => {
   const subjectData = req.body;
 
   try {
@@ -66,7 +66,7 @@ export const createSubject: RequestHandler = async (req, res: ServerResponse) =>
 };
 
 // Update a Subject
-export const updateSubject: RequestHandler = async (req, res: ServerResponse) => {
+export const updateSubject: RequestHandler = async (req: UpdateSubjectRequest, res: ServerResponse) => {
   const { subjectId } = req.params;
   const subjectData = req.body;
 

@@ -13,7 +13,7 @@ import { responseCreator } from "@utils/helpers";
 // Types & Constants
 import { STATUS } from "@utils/constants/status";
 import { MESSAGES } from "@utils/constants/message";
-import { ServerResponse } from "@interfaces/controllers";
+import { CreateUpdateRequest, ServerResponse, UpdateUpdateRequest } from "@interfaces/controllers";
 
 
 // Get All Updates & Get Update By ID
@@ -55,7 +55,7 @@ export const getUpdates: RequestHandler = async (req, res: ServerResponse) => {
 };
 
 // Create an Update
-export const createUpdate: RequestHandler = async (req, res: ServerResponse) => {
+export const createUpdate: RequestHandler = async (req: CreateUpdateRequest, res: ServerResponse) => {
   const updateData = req.body;
 
   try {
@@ -83,7 +83,7 @@ export const createUpdate: RequestHandler = async (req, res: ServerResponse) => 
 };
 
 // Update an Update
-export const updateUpdate: RequestHandler = async (req, res: ServerResponse) => {
+export const updateUpdate: RequestHandler = async (req: UpdateUpdateRequest, res: ServerResponse) => {
   const { updateId } = req.params;
   const updateData = req.body;
 

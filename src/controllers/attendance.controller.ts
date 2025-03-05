@@ -12,7 +12,7 @@ import { responseCreator } from "@utils/helpers";
 // Types & Constants
 import { STATUS } from "@utils/constants/status";
 import { MESSAGES } from "@utils/constants/message";
-import { ServerResponse } from "@interfaces/controllers";
+import { AddAttendanceRecordRequest, CreateAttendanceRequest, ServerResponse, UpdateAttendanceRequest } from "@interfaces/controllers";
 
 // Get All Attendances & Get Attendance By User ID
 export const getAttendances: RequestHandler = async (req, res: ServerResponse) => {
@@ -50,8 +50,8 @@ export const getAttendances: RequestHandler = async (req, res: ServerResponse) =
 };
 
 // Create an Attendance Record
-export const createAttendance: RequestHandler = async (req, res: ServerResponse) => {
-  const { userId, attendanceRecords } = req.body;
+export const createAttendance: RequestHandler = async (req: CreateAttendanceRequest, res: ServerResponse) => {
+  const { userId } = req.body;
 
   try {
     const existingAttendance = await Attendance.findOne({ userId });
@@ -61,7 +61,7 @@ export const createAttendance: RequestHandler = async (req, res: ServerResponse)
       return;
     }
 
-    const newAttendance = new Attendance({ userId, attendanceRecords });
+    const newAttendance = new Attendance({ userId });
     await newAttendance.save();
     logger.info(`Created a new attendance record for user: ${userId}`);
 
@@ -75,7 +75,7 @@ export const createAttendance: RequestHandler = async (req, res: ServerResponse)
 };
 
 // Add Attendance Record for a Student
-export const addAttendanceRecord: RequestHandler = async (req, res: ServerResponse) => {
+export const addAttendanceRecord: RequestHandler = async (req: AddAttendanceRecordRequest, res: ServerResponse) => {
   const { attendanceId } = req.params;
   const { date, time, subjectId, status } = req.body;
 
@@ -108,7 +108,7 @@ export const addAttendanceRecord: RequestHandler = async (req, res: ServerRespon
 };
 
 // Update an Attendance Record
-export const updateAttendance: RequestHandler = async (req, res: ServerResponse) => {
+export const updateAttendance: RequestHandler = async (req: UpdateAttendanceRequest, res: ServerResponse) => {
   const { attendanceId } = req.params;
   const { attendanceRecords } = req.body;
 

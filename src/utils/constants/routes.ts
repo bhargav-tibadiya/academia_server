@@ -56,4 +56,12 @@ export const ROUTES = {
     UPDATE: "/:profileId",
     DELETE: "/:profileId",
   },
+  FEES: {
+    BASE: "/fees",
+    GET: "/",
+    CREATE: "/",
+    GET_BY_ID: "/:feeId",
+    UPDATE: "/:feeId",
+    DELETE: "/:feeId",
+  },
 }

@@ -11,7 +11,7 @@ import { responseCreator } from "@utils/helpers";
 // Types & Constants
 import { STATUS } from "@utils/constants/status";
 import { MESSAGES } from "@utils/constants/message";
-import { ServerResponse } from "@interfaces/controllers";
+import { CreateProfileRequest, ServerResponse, UpdateProfileRequest } from "@interfaces/controllers";
 
 // Get All Profiles & Get Profile By ID
 export const getProfiles: RequestHandler = async (req, res: ServerResponse) => {
@@ -49,7 +49,7 @@ export const getProfiles: RequestHandler = async (req, res: ServerResponse) => {
 };
 
 // Create a Profile
-export const createProfile: RequestHandler = async (req, res: ServerResponse) => {
+export const createProfile: RequestHandler = async (req: CreateProfileRequest, res: ServerResponse) => {
   const profileData = req.body;
 
   try {
@@ -66,7 +66,7 @@ export const createProfile: RequestHandler = async (req, res: ServerResponse) =>
 };
 
 // Update a Profile
-export const updateProfile: RequestHandler = async (req, res: ServerResponse) => {
+export const updateProfile: RequestHandler = async (req: UpdateProfileRequest, res: ServerResponse) => {
   const { profileId } = req.params;
   const profileData = req.body;
 

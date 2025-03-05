@@ -1800,3 +1800,349 @@ paths:
                       __v:
                         type: integer
                         example: 1
+
+  /api/v1/fees:
+    get:
+      summary: Get all fees
+      description: This endpoint allows you to retrieve all fee records.
+      security:
+        - bearerAuth: []
+      tags:
+        - Fees
+      responses:
+        200:
+          description: Successfully fetched fee records.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Fees fetched successfully."
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "5f76c7f073bd614254c9f91b"
+                        semester:
+                          type: number
+                          example: 1
+                        date:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+                        amount:
+                          type: number
+                          example: 2000
+                        fine:
+                          type: number
+                          example: 500
+                        status:
+                          type: string
+                          enum: ["paid", "unpaid"]
+                          example: "unpaid"
+                        paidDate:
+                          type: string
+                          format: date-time
+                          example: "2025-03-02T00:00:00.000Z"
+                        mode:
+                          type: string
+                          example: "Credit Card"
+    post:
+      summary: Create a new fee record
+      description: This endpoint allows you to create a new fee record.
+      security:
+        - bearerAuth: []
+      tags:
+        - Fees
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                semester:
+                  type: number
+                  example: 1
+                date:
+                  type: string
+                  format: date
+                  example: "2025-03-01"
+                amount:
+                  type: number
+                  example: 2000
+                fine:
+                  type: number
+                  example: 500
+                status:
+                  type: string
+                  enum: ["paid", "unpaid"]
+                  example: "unpaid"
+                paidDate:
+                  type: string
+                  format: date-time
+                  example: "2025-03-02T00:00:00.000Z"
+                mode:
+                  type: string
+                  example: "Credit Card"
+              required:
+                - semester
+                - date
+                - amount
+                - fine
+                - status
+                - mode
+      responses:
+        201:
+          description: Fee created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  message:
+                    type: string
+                    example: "Fee created successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "5f76c7f073bd614254c9f91b"
+                      semester:
+                        type: number
+                        example: 1
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      amount:
+                        type: number
+                        example: 2000
+                      fine:
+                        type: number
+                        example: 500
+                      status:
+                        type: string
+                        enum: ["paid", "unpaid"]
+                        example: "unpaid"
+                      paidDate:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T00:00:00.000Z"
+                      mode:
+                        type: string
+                        example: "Credit Card"
+
+  /api/v1/fees/{feeId}:
+    get:
+      summary: Get fee by ID
+      description: This endpoint allows you to retrieve a fee record by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Fees
+      parameters:
+        - name: feeId
+          in: path
+          required: true
+          description: ID of the fee to retrieve
+          schema:
+            type: string
+            example: "5f76c7f073bd614254c9f91b"
+      responses:
+        200:
+          description: Successfully fetched fee record.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Fee fetched successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "5f76c7f073bd614254c9f91b"
+                      semester:
+                        type: number
+                        example: 1
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      amount:
+                        type: number
+                        example: 2000
+                      fine:
+                        type: number
+                        example: 500
+                      status:
+                        type: string
+                        enum: ["paid", "unpaid"]
+                        example: "unpaid"
+                      paidDate:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T00:00:00.000Z"
+                      mode:
+                        type: string
+                        example: "Credit Card"
+    put:
+      summary: Update a fee record
+      description: This endpoint allows you to update a fee record by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Fees
+      parameters:
+        - name: feeId
+          in: path
+          required: true
+          description: ID of the fee to update
+          schema:
+            type: string
+            example: "5f76c7f073bd614254c9f91b"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                semester:
+                  type: number
+                  example: 1
+                date:
+                  type: string
+                  format: date
+                  example: "2025-03-01"
+                amount:
+                  type: number
+                  example: 2000
+                fine:
+                  type: number
+                  example: 500
+                status:
+                  type: string
+                  enum: ["paid", "unpaid"]
+                  example: "unpaid"
+                paidDate:
+                  type: string
+                  format: date-time
+                  example: "2025-03-02T00:00:00.000Z"
+                mode:
+                  type: string
+                  example: "Credit Card"
+              required:
+                - semester
+                - date
+                - amount
+                - fine
+                - status
+                - mode
+      responses:
+        200:
+          description: Fee updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Fee updated successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "5f76c7f073bd614254c9f91b"
+                      semester:
+                        type: number
+                        example: 1
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      amount:
+                        type: number
+                        example: 2000
+                      fine:
+                        type: number
+                        example: 500
+                      status:
+                        type: string
+                        enum: ["paid", "unpaid"]
+                        example: "unpaid"
+                      paidDate:
+                        type: string
+                        format: date-time
+                        example: "2025-03-02T00:00:00.000Z"
+                      mode:
+                        type: string
+                        example: "Credit Card"
+    delete:
+      summary: Delete a fee record
+      description: This endpoint allows you to delete a fee record by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Fees
+      parameters:
+        - name: feeId
+          in: path
+          required: true
+          description: ID of the fee to delete
+          schema:
+            type: string
+            example: "5f76c7f073bd614254c9f91b"
+      responses:
+        200:
+          description: Fee deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Fee deleted successfully."

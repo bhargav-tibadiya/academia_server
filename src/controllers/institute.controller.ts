@@ -12,7 +12,7 @@ import { responseCreator } from "@utils/helpers";
 // Types & Constants
 import { STATUS } from "@utils/constants/status";
 import { MESSAGES } from "@utils/constants/message";
-import { ServerResponse } from "@interfaces/controllers";
+import { CreateInstituteRequest, ServerResponse } from "@interfaces/controllers";
 
 // Get All Institutes & Get Institute By ID
 export const getInstitutes: RequestHandler = async (req, res: ServerResponse) => {
@@ -51,7 +51,7 @@ export const getInstitutes: RequestHandler = async (req, res: ServerResponse) =>
 };
 
 // Create an Institute
-export const createInstitute: RequestHandler = async (req, res: ServerResponse) => {
+export const createInstitute: RequestHandler = async (req: CreateInstituteRequest, res: ServerResponse) => {
   const instituteData = req.body;
 
   try {
