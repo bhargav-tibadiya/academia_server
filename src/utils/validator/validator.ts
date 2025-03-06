@@ -485,7 +485,166 @@ const Validators = {
       "string.base": "Mode must be a string",
       "any.required": "Mode is required",
     }),
-  })
+  }),
+
+  // --> HALL TICKET <--
+  createHallTicket: Joi.object({
+    seatNo: Joi.number().required().messages({
+      "number.base": "Seat Number must be a number",
+      "any.required": "Seat Number is required",
+    }),
+
+    name: Joi.string().min(1).max(100).required().messages({
+      "string.base": "Name must be a string",
+      "any.required": "Name is required",
+      "string.min": "Name must be at least 1 character long",
+      "string.max": "Name must be at most 100 characters long",
+    }),
+
+    institute: Joi.string().min(1).max(100).required().messages({
+      "string.base": "Institute must be a string",
+      "any.required": "Institute is required",
+      "string.min": "Institute must be at least 1 character long",
+      "string.max": "Institute must be at most 100 characters long",
+    }),
+
+    department: Joi.string().min(1).max(100).required().messages({
+      "string.base": "Department must be a string",
+      "any.required": "Department is required",
+      "string.min": "Department must be at least 1 character long",
+      "string.max": "Department must be at most 100 characters long",
+    }),
+
+    schedule: Joi.array().items(
+      Joi.object({
+        subject: Joi.string().min(1).max(100).required().messages({
+          "string.base": "Subject must be a string",
+          "any.required": "Subject is required",
+          "string.min": "Subject must be at least 1 character long",
+          "string.max": "Subject must be at most 100 characters long",
+        }),
+
+        date: Joi.date().required().messages({
+          "date.base": "Date must be a valid date",
+          "any.required": "Date is required",
+        }),
+
+        startTime: Joi.date().required().messages({
+          "date.base": "Start Time must be a valid date",
+          "any.required": "Start Time is required",
+        }),
+
+        endTime: Joi.date().required().messages({
+          "date.base": "End Time must be a valid date",
+          "any.required": "End Time is required",
+        }),
+
+        center: Joi.string().min(1).max(100).required().messages({
+          "string.base": "Center must be a string",
+          "any.required": "Center is required",
+          "string.min": "Center must be at least 1 character long",
+          "string.max": "Center must be at most 100 characters long",
+        }),
+
+        roomNo: Joi.string().min(1).max(10).required().messages({
+          "string.base": "Room Number must be a string",
+          "any.required": "Room Number is required",
+          "string.min": "Room Number must be at least 1 character long",
+          "string.max": "Room Number must be at most 10 characters long",
+        }),
+
+        block: Joi.number().required().messages({
+          "number.base": "Block must be a number",
+          "any.required": "Block is required",
+        }),
+      })
+    ).required().messages({
+      "array.base": "Schedule must be an array",
+      "any.required": "Schedule is required",
+    }),
+
+  }).messages({
+    "object.base": "Hall Ticket data must be an object",
+  }),
+
+  updateHallTicket: Joi.object({
+    seatNo: Joi.number().required().messages({
+      "number.base": "Seat Number must be a number",
+      "any.required": "Seat Number is required",
+    }),
+
+    name: Joi.string().min(1).max(100).required().messages({
+      "string.base": "Name must be a string",
+      "any.required": "Name is required",
+      "string.min": "Name must be at least 1 character long",
+      "string.max": "Name must be at most 100 characters long",
+    }),
+
+    institute: Joi.string().min(1).max(100).required().messages({
+      "string.base": "Institute must be a string",
+      "any.required": "Institute is required",
+      "string.min": "Institute must be at least 1 character long",
+      "string.max": "Institute must be at most 100 characters long",
+    }),
+
+    department: Joi.string().min(1).max(100).required().messages({
+      "string.base": "Department must be a string",
+      "any.required": "Department is required",
+      "string.min": "Department must be at least 1 character long",
+      "string.max": "Department must be at most 100 characters long",
+    }),
+
+    schedule: Joi.array().items(
+      Joi.object({
+        subject: Joi.string().min(1).max(100).required().messages({
+          "string.base": "Subject must be a string",
+          "any.required": "Subject is required",
+          "string.min": "Subject must be at least 1 character long",
+          "string.max": "Subject must be at most 100 characters long",
+        }),
+
+        date: Joi.date().required().messages({
+          "date.base": "Date must be a valid date",
+          "any.required": "Date is required",
+        }),
+
+        startTime: Joi.date().required().messages({
+          "date.base": "Start Time must be a valid date",
+          "any.required": "Start Time is required",
+        }),
+
+        endTime: Joi.date().required().messages({
+          "date.base": "End Time must be a valid date",
+          "any.required": "End Time is required",
+        }),
+
+        center: Joi.string().min(1).max(100).required().messages({
+          "string.base": "Center must be a string",
+          "any.required": "Center is required",
+          "string.min": "Center must be at least 1 character long",
+          "string.max": "Center must be at most 100 characters long",
+        }),
+
+        roomNo: Joi.string().min(1).max(10).required().messages({
+          "string.base": "Room Number must be a string",
+          "any.required": "Room Number is required",
+          "string.min": "Room Number must be at least 1 character long",
+          "string.max": "Room Number must be at most 10 characters long",
+        }),
+
+        block: Joi.number().required().messages({
+          "number.base": "Block must be a number",
+          "any.required": "Block is required",
+        }),
+      })
+    ).required().messages({
+      "array.base": "Schedule must be an array",
+      "any.required": "Schedule is required",
+    }),
+
+  }).messages({
+    "object.base": "Hall Ticket data must be an object",
+  }),
 }
 
 export default Validators

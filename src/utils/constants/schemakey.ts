@@ -32,6 +32,10 @@ interface SchemaKeyType {
     CREATE: "createFees",
     UPDATE: "updateFees",
   },
+  HALLTICKET: {
+    CREATE: "createHallTicket",
+    UPDATE: "updateHallTicket",
+  },
 }
 
 export const SCHEMAKEY: SchemaKeyType = {
@@ -75,5 +79,10 @@ export const SCHEMAKEY: SchemaKeyType = {
   FEES: {
     CREATE: "createFees",
     UPDATE: "updateFees",
+  },
+  // 
+  HALLTICKET: {
+    CREATE: "createHallTicket",
+    UPDATE: "updateHallTicket",
   },
 }
