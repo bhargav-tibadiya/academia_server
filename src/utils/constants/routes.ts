@@ -1,12 +1,12 @@
 export const ROUTES = {
   BASE: "/api/v1",
   ALL: "*",
-  DOCS: '/api/docs',
+  DOCS: "/api/docs",
   AUTH: {
-    BASE: '/auth',
-    LOGIN: '/login',
-    SIGNUP: '/signup',
-    SEND_OTP: '/sendOtp',
+    BASE: "/auth",
+    LOGIN: "/login",
+    SIGNUP: "/signup",
+    SEND_OTP: "/sendOtp",
   },
   USER: {
     BASE: "/user",
@@ -65,11 +65,27 @@ export const ROUTES = {
     DELETE: "/:feeId",
   },
   HALLTICKET: {
-    BASE: "/hallticket",
+    BASE: "/halltickets",
     GET: "/",
     CREATE: "/",
     GET_BY_ID: "/:hallticketId",
     UPDATE: "/:hallticketId",
     DELETE: "/:hallticketId",
   },
-}
+  CLASS: {
+    BASE: "/class",
+    GET: "/",
+    GET_BY_ID: "/:classId",
+    CREATE: "/",
+    UPDATE: "/:classId",
+    DELETE: "/:classId",
+  },
+  TIMETABLE: {
+    BASE: "/timetable",
+    GET: "/",
+    GET_BY_ID: "/:timetableId",
+    CREATE: "/",
+    UPDATE: "/:timetableId",
+    DELETE: "/:timetableId",
+  },
+};

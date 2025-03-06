@@ -36,6 +36,14 @@ interface SchemaKeyType {
     CREATE: "createHallTicket",
     UPDATE: "updateHallTicket",
   },
+  CLASS:{
+    CREATE:"createClass",
+    UPDATE:"updateClass",
+  },
+  TIMETABLE:{
+    CREATE:"createTimeTable",
+    UPDATE:"updateTimeTable",
+  },
 }
 
 export const SCHEMAKEY: SchemaKeyType = {
@@ -84,5 +92,15 @@ export const SCHEMAKEY: SchemaKeyType = {
   HALLTICKET: {
     CREATE: "createHallTicket",
     UPDATE: "updateHallTicket",
+  },
+  // 
+  CLASS: {
+    CREATE: "createClass",
+    UPDATE: "updateClass",
+  },
+  // 
+  TIMETABLE:{
+    CREATE:"createTimeTable",
+    UPDATE:"updateTimeTable",
   },
 }
