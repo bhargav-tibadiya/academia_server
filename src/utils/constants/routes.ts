@@ -72,4 +72,12 @@ export const ROUTES = {
     UPDATE: "/:hallticketId",
     DELETE: "/:hallticketId",
   },
+  NOTIFICATION: {
+    BASE: "/notification",
+    GET: "/",
+    CREATE: "/",
+    GET_BY_ID: "/:notificationId",
+    UPDATE: "/:notificationId",
+    DELETE: "/:notificationId",
+  },
 }

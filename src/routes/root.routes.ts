@@ -11,7 +11,7 @@ import AttendanceRouter from '@routes/attendance.routes'
 import ProfileRouter from '@routes/profile.routes'
 import FeesRouter from '@routes/fees.route'
 import HallTicketRouter from '@routes/hallticket.routes'
-
+import NotificationRouter from '@routes/notification.router'
 // Middleware
 import notFoundHandler from "@middleware/notfound";
 
@@ -29,6 +29,7 @@ router.use(ROUTES.ATTENDANCE.BASE, AttendanceRouter);
 router.use(ROUTES.PROFILE.BASE, ProfileRouter);
 router.use(ROUTES.FEES.BASE, FeesRouter);
 router.use(ROUTES.HALLTICKET.BASE, HallTicketRouter);
+router.use(ROUTES.NOTIFICATION.BASE, NotificationRouter);
 
 router.all(ROUTES.ALL, notFoundHandler);
 

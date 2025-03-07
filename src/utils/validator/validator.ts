@@ -645,6 +645,52 @@ const Validators = {
   }).messages({
     "object.base": "Hall Ticket data must be an object",
   }),
+
+  // --> NOTIFICATION <--
+  createNotification: Joi.object({
+    date: Joi.date().required().messages({
+      "date.base": "Date must be a valid date",
+      "any.required": "Date is required",
+    }),
+
+    content: Joi.string().min(1).max(1000).required().messages({
+      "string.base": "Content must be a string",
+      "any.required": "Content is required",
+      "string.min": "Content must be at least 1 character long",
+      "string.max": "Content must be at most 1000 characters long",
+    }),
+
+    link: Joi.string().uri().required().messages({
+      "string.base": "Link must be a string",
+      "string.uri": "Link must be a valid URL",
+      "any.required": "Link is required",
+    }),
+
+  }).messages({
+    "object.base": "Notification data must be an object",
+  }),
+
+  updateNotification: Joi.object({
+    date: Joi.date().optional().messages({
+      "date.base": "Date must be a valid date",
+    }),
+
+    content: Joi.string().min(1).max(1000).optional().messages({
+      "string.base": "Content must be a string",
+      "string.min": "Content must be at least 1 character long",
+      "string.max": "Content must be at most 1000 characters long",
+    }),
+
+    link: Joi.string().uri().optional().messages({
+      "string.base": "Link must be a string",
+      "string.uri": "Link must be a valid URL",
+    }),
+
+  }).min(1).messages({
+    "object.base": "Notification data must be an object",
+    "object.min": "At least one field must be provided for update"
+  }),
+
 }
 
 export default Validators
