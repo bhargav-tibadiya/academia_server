@@ -2146,3 +2146,773 @@ paths:
                   message:
                     type: string
                     example: "Fee deleted successfully."
+
+  # ----------->> HALL TICKET <<----------
+  /api/v1/hallticket:
+    get:
+      summary: Get all hall tickets
+      description: This endpoint allows you to retrieve all hall tickets.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      responses:
+        200:
+          description: Successfully fetched hall tickets.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "67c5d4295baf78fdded2f358"
+                        seatNo:
+                          type: number
+                          example: 101
+                        name:
+                          type: string
+                          example: "John Doe"
+                        institute:
+                          type: string
+                          example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                        department:
+                          type: string
+                          example: "Computer Engineering"
+                        schedule:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              subject:
+                                type: string
+                                example: "Object Oriented Programming"
+                              date:
+                                type: string
+                                format: date-time
+                                example: "2025-03-15T00:00:00.000Z"
+                              startTime:
+                                type: string
+                                format: date-time
+                                example: "2025-03-15T09:00:00.000Z"
+                              endTime:
+                                type: string
+                                format: date-time
+                                example: "2025-03-15T12:00:00.000Z"
+                              center:
+                                type: string
+                                example: "Main Campus"
+                              roomNo:
+                                type: string
+                                example: "101"
+                              block:
+                                type: number
+                                example: 1
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+    post:
+      summary: Create a new hall ticket
+      description: This endpoint allows you to create a new hall ticket.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - seatNo
+                - name
+                - institute
+                - department
+                - schedule
+              properties:
+                seatNo:
+                  type: number
+                  example: 101
+                name:
+                  type: string
+                  example: "John Doe"
+                institute:
+                  type: string
+                  example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                department:
+                  type: string
+                  example: "Computer Engineering"
+                schedule:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - subject
+                      - date
+                      - startTime
+                      - endTime
+                      - center
+                      - roomNo
+                      - block
+                    properties:
+                      subject:
+                        type: string
+                        example: "Object Oriented Programming"
+                      date:
+                        type: string
+                        format: date
+                        example: "2025-03-15"
+                      startTime:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T09:00:00.000Z"
+                      endTime:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T12:00:00.000Z"
+                      center:
+                        type: string
+                        example: "Main Campus"
+                      roomNo:
+                        type: string
+                        example: "101"
+                      block:
+                        type: number
+                        example: 1
+      responses:
+        201:
+          description: Hall ticket created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      seatNo:
+                        type: number
+                        example: 101
+                      name:
+                        type: string
+                        example: "John Doe"
+                      institute:
+                        type: string
+                        example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                      department:
+                        type: string
+                        example: "Computer Engineering"
+                      schedule:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            subject:
+                              type: string
+                              example: "Object Oriented Programming"
+                            date:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T00:00:00.000Z"
+                            startTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T09:00:00.000Z"
+                            endTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T12:00:00.000Z"
+                            center:
+                              type: string
+                              example: "Main Campus"
+                            roomNo:
+                              type: string
+                              example: "101"
+                            block:
+                              type: number
+                              example: 1
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+
+  /api/v1/hallticket/{hallTicketId}:
+    get:
+      summary: Get hall ticket by ID
+      description: This endpoint allows you to retrieve a hall ticket by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      parameters:
+        - name: hallTicketId
+          in: path
+          required: true
+          description: ID of the hall ticket to retrieve
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Successfully fetched hall ticket.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      seatNo:
+                        type: number
+                        example: 101
+                      name:
+                        type: string
+                        example: "John Doe"
+                      institute:
+                        type: string
+                        example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                      department:
+                        type: string
+                        example: "Computer Engineering"
+                      schedule:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            subject:
+                              type: string
+                              example: "Object Oriented Programming"
+                            date:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T00:00:00.000Z"
+                            startTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T09:00:00.000Z"
+                            endTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T12:00:00.000Z"
+                            center:
+                              type: string
+                              example: "Main Campus"
+                            roomNo:
+                              type: string
+                              example: "101"
+                            block:
+                              type: number
+                              example: 1
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+    put:
+      summary: Update a hall ticket
+      description: This endpoint allows you to update a hall ticket by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      parameters:
+        - name: hallTicketId
+          in: path
+          required: true
+          description: ID of the hall ticket to update
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                seatNo:
+                  type: number
+                  example: 101
+                name:
+                  type: string
+                  example: "John Doe"
+                institute:
+                  type: string
+                  example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                department:
+                  type: string
+                  example: "Computer Engineering"
+                schedule:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      subject:
+                        type: string
+                        example: "Object Oriented Programming"
+                      date:
+                        type: string
+                        format: date
+                        example: "2025-03-15"
+                      startTime:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T09:00:00.000Z"
+                      endTime:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T12:00:00.000Z"
+                      center:
+                        type: string
+                        example: "Main Campus"
+                      roomNo:
+                        type: string
+                        example: "101"
+                      block:
+                        type: number
+                        example: 1
+      responses:
+        200:
+          description: Hall ticket updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data updated successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      seatNo:
+                        type: number
+                        example: 101
+                      name:
+                        type: string
+                        example: "John Doe"
+                      institute:
+                        type: string
+                        example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                      department:
+                        type: string
+                        example: "Computer Engineering"
+                      schedule:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            subject:
+                              type: string
+                              example: "Object Oriented Programming"
+                            date:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T00:00:00.000Z"
+                            startTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T09:00:00.000Z"
+                            endTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T12:00:00.000Z"
+                            center:
+                              type: string
+                              example: "Main Campus"
+                            roomNo:
+                              type: string
+                              example: "101"
+                            block:
+                              type: number
+                              example: 1
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+    delete:
+      summary: Delete a hall ticket
+      description: This endpoint allows you to delete a hall ticket by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      parameters:
+        - name: hallTicketId
+          in: path
+          required: true
+          description: ID of the hall ticket to delete
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Hall ticket deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully."
+                  data:
+                    type: object
+
+  # ----------->> NOTIFICATION <<----------
+  /api/v1/notification:
+    get:
+      summary: Get all notifications
+      description: This endpoint allows you to retrieve all notifications, sorted by date in descending order.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      responses:
+        200:
+          description: Successfully fetched notifications.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "67c5d4295baf78fdded2f358"
+                        date:
+                          type: string
+                          format: date-time
+                          example: "2025-03-15T00:00:00.000Z"
+                        content:
+                          type: string
+                          example: "Important announcement about upcoming examinations"
+                        link:
+                          type: string
+                          example: "https://example.com/announcements/exam-schedule"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+    post:
+      summary: Create a new notification
+      description: This endpoint allows you to create a new notification.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - date
+                - content
+                - link
+              properties:
+                date:
+                  type: string
+                  format: date
+                  example: "2025-03-15"
+                content:
+                  type: string
+                  example: "Important announcement about upcoming examinations"
+                link:
+                  type: string
+                  example: "https://example.com/announcements/exam-schedule"
+      responses:
+        201:
+          description: Notification created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T00:00:00.000Z"
+                      content:
+                        type: string
+                        example: "Important announcement about upcoming examinations"
+                      link:
+                        type: string
+                        example: "https://example.com/announcements/exam-schedule"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+
+  /api/v1/notification/{notificationId}:
+    get:
+      summary: Get notification by ID
+      description: This endpoint allows you to retrieve a notification by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          description: ID of the notification to retrieve
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Successfully fetched notification.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T00:00:00.000Z"
+                      content:
+                        type: string
+                        example: "Important announcement about upcoming examinations"
+                      link:
+                        type: string
+                        example: "https://example.com/announcements/exam-schedule"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+    put:
+      summary: Update a notification
+      description: This endpoint allows you to update a notification by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          description: ID of the notification to update
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                  example: "2025-03-15"
+                content:
+                  type: string
+                  example: "Important announcement about upcoming examinations"
+                link:
+                  type: string
+                  example: "https://example.com/announcements/exam-schedule"
+      responses:
+        200:
+          description: Notification updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data updated successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T00:00:00.000Z"
+                      content:
+                        type: string
+                        example: "Important announcement about upcoming examinations"
+                      link:
+                        type: string
+                        example: "https://example.com/announcements/exam-schedule"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+    delete:
+      summary: Delete a notification
+      description: This endpoint allows you to delete a notification by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          description: ID of the notification to delete
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Notification deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully."
+                  data:
+                    type: object
