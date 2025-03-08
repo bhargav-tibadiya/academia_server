@@ -12,6 +12,14 @@ import ProfileRouter from '@routes/profile.routes'
 import FeesRouter from '@routes/fees.route'
 import HallTicketRouter from '@routes/hallticket.routes'
 import NotificationRouter from '@routes/notification.router'
+import ClassRouter from '@routes/class.routes'
+import DepartmentRouter from '@routes/department.routes'
+import PlacementRouter from '@routes/placement.routes'
+import RequestRouter from '@routes/request.routes'
+import ResultRouter from '@routes/result.routes'
+import StudentRouter from '@routes/student.routes'
+import TimeTableRouter from '@routes/timetable.routes'
+
 // Middleware
 import notFoundHandler from "@middleware/notfound";
 
@@ -30,6 +38,13 @@ router.use(ROUTES.PROFILE.BASE, ProfileRouter);
 router.use(ROUTES.FEES.BASE, FeesRouter);
 router.use(ROUTES.HALLTICKET.BASE, HallTicketRouter);
 router.use(ROUTES.NOTIFICATION.BASE, NotificationRouter);
+router.use(ROUTES.CLASS.BASE, ClassRouter);
+router.use(ROUTES.DEPARTMENT.BASE, DepartmentRouter);
+router.use(ROUTES.PLACEMENT.BASE, PlacementRouter);
+router.use(ROUTES.REQUEST.BASE, RequestRouter);
+router.use(ROUTES.RESULT.BASE, ResultRouter);
+router.use(ROUTES.STUDENT.BASE, StudentRouter);
+router.use(ROUTES.TIMETABLE.BASE, TimeTableRouter);
 
 router.all(ROUTES.ALL, notFoundHandler);
 

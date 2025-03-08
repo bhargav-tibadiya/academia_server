@@ -691,6 +691,675 @@ const Validators = {
     "object.min": "At least one field must be provided for update"
   }),
 
+  // --> CLASS <--
+  createClass: Joi.object({
+    name: Joi.string().required().messages({
+      "string.base": "Name must be a string",
+      "any.required": "Name is required",
+    }),
+    students: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Student ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Students must be an array",
+    }),
+    timeTableId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Timetable ID must be a valid ObjectId",
+    }),
+    exams: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Exam ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Exams must be an array",
+    }),
+    updates: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Update ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Updates must be an array",
+    })
+  }),
+
+  updateClass: Joi.object({
+    name: Joi.string().messages({
+      "string.base": "Name must be a string",
+    }),
+    students: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Student ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Students must be an array",
+    }),
+    timeTableId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Timetable ID must be a valid ObjectId",
+    }),
+    exams: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Exam ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Exams must be an array",
+    }),
+    updates: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Update ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Updates must be an array",
+    })
+  }),
+
+  // --> DEPARTMENT <--
+  createDepartment: Joi.object({
+    name: Joi.string().required().messages({
+      "string.base": "Name must be a string",
+      "any.required": "Name is required",
+    }),
+    batch: Joi.string().required().messages({
+      "string.base": "Batch must be a string",
+      "any.required": "Batch is required",
+    }),
+    classes: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Class ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Classes must be an array",
+    })
+  }),
+
+  updateDepartment: Joi.object({
+    name: Joi.string().messages({
+      "string.base": "Name must be a string",
+    }),
+    batch: Joi.string().messages({
+      "string.base": "Batch must be a string",
+    }),
+    classes: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Class ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Classes must be an array",
+    })
+  }),
+
+  // --> PLACEMENT <--
+  createPlacement: Joi.object({
+    companyName: Joi.string().required().messages({
+      "string.base": "Company name must be a string",
+      "any.required": "Company name is required",
+    }),
+    companyImage: Joi.string().required().messages({
+      "string.base": "Company image must be a string",
+      "any.required": "Company image is required",
+    }),
+    jobRole: Joi.string().required().messages({
+      "string.base": "Job role must be a string",
+      "any.required": "Job role is required",
+    }),
+    agreement: Joi.string().required().messages({
+      "string.base": "Agreement must be a string",
+      "any.required": "Agreement is required",
+    }),
+    package: Joi.string().required().messages({
+      "string.base": "Package must be a string",
+      "any.required": "Package is required",
+    }),
+    description: Joi.string().required().messages({
+      "string.base": "Description must be a string",
+      "any.required": "Description is required",
+    }),
+    requirement: Joi.string().required().messages({
+      "string.base": "Requirement must be a string",
+      "any.required": "Requirement is required",
+    }),
+    deadline: Joi.date().required().messages({
+      "date.base": "Deadline must be a valid date",
+      "any.required": "Deadline is required",
+    }),
+    technologies: Joi.string().required().messages({
+      "string.base": "Technologies must be a string",
+      "any.required": "Technologies is required",
+    }),
+    appliedStudents: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Student ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Applied students must be an array",
+    })
+  }),
+
+  updatePlacement: Joi.object({
+    companyName: Joi.string().messages({
+      "string.base": "Company name must be a string",
+    }),
+    companyImage: Joi.string().messages({
+      "string.base": "Company image must be a string",
+    }),
+    jobRole: Joi.string().messages({
+      "string.base": "Job role must be a string",
+    }),
+    agreement: Joi.string().messages({
+      "string.base": "Agreement must be a string",
+    }),
+    package: Joi.string().messages({
+      "string.base": "Package must be a string",
+    }),
+    description: Joi.string().messages({
+      "string.base": "Description must be a string",
+    }),
+    requirement: Joi.string().messages({
+      "string.base": "Requirement must be a string",
+    }),
+    deadline: Joi.date().messages({
+      "date.base": "Deadline must be a valid date",
+    }),
+    technologies: Joi.string().messages({
+      "string.base": "Technologies must be a string",
+    }),
+    appliedStudents: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Student ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Applied students must be an array",
+    })
+  }),
+
+  // --> RESULT <--
+  createResult: Joi.object({
+    semester: Joi.number().required().messages({
+      "number.base": "Semester must be a number",
+      "any.required": "Semester is required",
+    }),
+    time: Joi.string().required().messages({
+      "string.base": "Time must be a string",
+      "any.required": "Time is required",
+    }),
+    regular: Joi.boolean().required().messages({
+      "boolean.base": "Regular must be a boolean",
+      "any.required": "Regular is required",
+    }),
+    result: Joi.object({
+      overallGrade: Joi.string().required().messages({
+        "string.base": "Overall grade must be a string",
+        "any.required": "Overall grade is required",
+      }),
+      SGPA: Joi.number().required().messages({
+        "number.base": "SGPA must be a number",
+        "any.required": "SGPA is required",
+      }),
+      CGPA: Joi.number().required().messages({
+        "number.base": "CGPA must be a number",
+        "any.required": "CGPA is required",
+      }),
+      subjects: Joi.array().items(
+        Joi.object({
+          code: Joi.string().required().messages({
+            "string.base": "Subject code must be a string",
+            "any.required": "Subject code is required",
+          }),
+          name: Joi.string().required().messages({
+            "string.base": "Subject name must be a string",
+            "any.required": "Subject name is required",
+          }),
+          type: Joi.string().valid("theory", "practical").required().messages({
+            "string.base": "Subject type must be a string",
+            "any.required": "Subject type is required",
+            "any.only": "Subject type must be either 'theory' or 'practical'",
+          }),
+          credit: Joi.number().required().messages({
+            "number.base": "Subject credit must be a number",
+            "any.required": "Subject credit is required",
+          }),
+          grade: Joi.string().required().messages({
+            "string.base": "Subject grade must be a string",
+            "any.required": "Subject grade is required",
+          }),
+        })
+      ).required().messages({
+        "array.base": "Subjects must be an array",
+        "any.required": "Subjects are required",
+      }),
+    }).required().messages({
+      "object.base": "Result must be an object",
+      "any.required": "Result is required",
+    }),
+  }),
+
+  updateResult: Joi.object({
+    semester: Joi.number().messages({
+      "number.base": "Semester must be a number",
+    }),
+    time: Joi.string().messages({
+      "string.base": "Time must be a string",
+    }),
+    regular: Joi.boolean().messages({
+      "boolean.base": "Regular must be a boolean",
+    }),
+    result: Joi.object({
+      overallGrade: Joi.string().messages({
+        "string.base": "Overall grade must be a string",
+      }),
+      SGPA: Joi.number().messages({
+        "number.base": "SGPA must be a number",
+      }),
+      CGPA: Joi.number().messages({
+        "number.base": "CGPA must be a number",
+      }),
+      subjects: Joi.array().items(
+        Joi.object({
+          code: Joi.string().messages({
+            "string.base": "Subject code must be a string",
+          }),
+          name: Joi.string().messages({
+            "string.base": "Subject name must be a string",
+          }),
+          type: Joi.string().valid("theory", "practical").messages({
+            "string.base": "Subject type must be a string",
+            "any.only": "Subject type must be either 'theory' or 'practical'",
+          }),
+          credit: Joi.number().messages({
+            "number.base": "Subject credit must be a number",
+          }),
+          grade: Joi.string().messages({
+            "string.base": "Subject grade must be a string",
+          }),
+        })
+      ).messages({
+        "array.base": "Subjects must be an array",
+      }),
+    }).messages({
+      "object.base": "Result must be an object",
+    }),
+  }),
+
+  // --> STUDENT <--
+  createStudent: Joi.object({
+    enrollmentNo: Joi.number().messages({
+      "number.base": "Enrollment number must be a number",
+    }),
+    userId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "any.invalid": "User ID must be a valid ObjectId",
+      "any.required": "User ID is required",
+    }),
+    profileId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "any.invalid": "Profile ID must be a valid ObjectId",
+      "any.required": "Profile ID is required",
+    }),
+    instituteId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "any.invalid": "Institute ID must be a valid ObjectId",
+      "any.required": "Institute ID is required",
+    }),
+    departmentId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "any.invalid": "Department ID must be a valid ObjectId",
+      "any.required": "Department ID is required",
+    }),
+    classId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "any.invalid": "Class ID must be a valid ObjectId",
+      "any.required": "Class ID is required",
+    }),
+    attendanceId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Attendance ID must be a valid ObjectId",
+    }),
+    requests: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Request ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Requests must be an array",
+    }),
+    results: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Result ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Results must be an array",
+    }),
+    notifications: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Notification ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Notifications must be an array",
+    }),
+    fees: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Fee ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Fees must be an array",
+    }),
+    hallTickets: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Hall ticket ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Hall tickets must be an array",
+    }),
+  }),
+
+  updateStudent: Joi.object({
+    enrollmentNo: Joi.number().messages({
+      "number.base": "Enrollment number must be a number",
+    }),
+    userId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "User ID must be a valid ObjectId",
+    }),
+    profileId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Profile ID must be a valid ObjectId",
+    }),
+    instituteId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Institute ID must be a valid ObjectId",
+    }),
+    departmentId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Department ID must be a valid ObjectId",
+    }),
+    classId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Class ID must be a valid ObjectId",
+    }),
+    attendanceId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Attendance ID must be a valid ObjectId",
+    }),
+    requests: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Request ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Requests must be an array",
+    }),
+    results: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Result ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Results must be an array",
+    }),
+    notifications: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Notification ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Notifications must be an array",
+    }),
+    fees: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Fee ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Fees must be an array",
+    }),
+    hallTickets: Joi.array().items(
+      Joi.string().custom((value, helpers) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          return helpers.error("any.invalid");
+        }
+        return value;
+      }).messages({
+        "any.invalid": "Hall ticket ID must be a valid ObjectId",
+      })
+    ).messages({
+      "array.base": "Hall tickets must be an array",
+    }),
+  }),
+
+  // --> TIMETABLE <--
+  createTimeTable: Joi.object({
+    classId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "any.invalid": "Class ID must be a valid ObjectId",
+      "any.required": "Class ID is required",
+    }),
+    timetable: Joi.object().required().messages({
+      "object.base": "Timetable must be an object",
+      "any.required": "Timetable is required",
+    }),
+  }),
+
+  updateTimeTable: Joi.object({
+    classId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Class ID must be a valid ObjectId",
+    }),
+    timetable: Joi.object().messages({
+      "object.base": "Timetable must be an object",
+    }),
+  }),
+
+  // --> REQUEST <--
+  createRequest: Joi.object({
+    studentId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "any.invalid": "Student ID must be a valid ObjectId",
+      "any.required": "Student ID is required",
+    }),
+    request: Joi.string().required().messages({
+      "any.required": "Request is required",
+    }),
+    assignee: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "any.invalid": "Assignee ID must be a valid ObjectId",
+      "any.required": "Assignee ID is required",
+    }),
+    comments: Joi.string().messages({
+      "string.base": "Comments must be a string",
+    }),
+  }),
+
+  updateRequest: Joi.object({
+    request: Joi.string().required().messages({
+      "any.required": "Request is required",
+    }),
+    comments: Joi.string().messages({
+      "string.base": "Comments must be a string",
+    }),
+    status: Joi.string().valid("pending", "completed", "cancelled").messages({
+      "any.only": "Status must be either 'pending', 'completed', or 'cancelled'",
+    }),
+    assignee: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Assignee ID must be a valid ObjectId",
+    }),
+    studentId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).messages({
+      "any.invalid": "Student ID must be a valid ObjectId",
+    })
+  }),
 }
 
 export default Validators
