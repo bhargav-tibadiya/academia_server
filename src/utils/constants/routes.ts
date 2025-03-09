@@ -9,14 +9,14 @@ export const ROUTES = {
     SEND_OTP: "/send-otp"
   },
   USER: {
-    BASE: "/users",
+    BASE: "/user",
     GET: "/",
     GET_BY_ID: "/:userId",
     UPDATE: "/:userId",
     DELETE: "/:userId"
   },
   UPDATE: {
-    BASE: "/updates",
+    BASE: "/update",
     GET: "/",
     GET_BY_ID: "/:updateId",
     CREATE: "/",
@@ -24,7 +24,7 @@ export const ROUTES = {
     DELETE: "/:updateId"
   },
   INSTITUTE: {
-    BASE: "/institutes",
+    BASE: "/institute",
     GET: "/",
     GET_BY_ID: "/:instituteId",
     CREATE: "/",
@@ -32,7 +32,7 @@ export const ROUTES = {
     DELETE: "/:instituteId"
   },
   SUBJECT: {
-    BASE: "/subjects",
+    BASE: "/subject",
     GET: "/",
     GET_BY_ID: "/:subjectId",
     CREATE: "/",
@@ -49,7 +49,7 @@ export const ROUTES = {
     DELETE: "/:attendanceId"
   },
   PROFILE: {
-    BASE: "/profiles",
+    BASE: "/profile",
     GET: "/",
     GET_BY_ID: "/:profileId",
     CREATE: "/",
@@ -57,7 +57,7 @@ export const ROUTES = {
     DELETE: "/:profileId"
   },
   FEES: {
-    BASE: "/fees",
+    BASE: "/fee",
     GET: "/",
     GET_BY_ID: "/:feeId",
     CREATE: "/",
@@ -65,7 +65,7 @@ export const ROUTES = {
     DELETE: "/:feeId"
   },
   HALLTICKET: {
-    BASE: "/halltickets",
+    BASE: "/hallticket",
     GET: "/",
     GET_BY_ID: "/:hallTicketId",
     CREATE: "/",
@@ -73,7 +73,7 @@ export const ROUTES = {
     DELETE: "/:hallTicketId"
   },
   NOTIFICATION: {
-    BASE: "/notifications",
+    BASE: "/notification",
     GET: "/",
     GET_BY_ID: "/:notificationId",
     CREATE: "/",
@@ -81,7 +81,7 @@ export const ROUTES = {
     DELETE: "/:notificationId"
   },
   CLASS: {
-    BASE: "/classes",
+    BASE: "/class",
     GET: "/",
     GET_BY_ID: "/:classId",
     CREATE: "/",
@@ -89,7 +89,7 @@ export const ROUTES = {
     DELETE: "/:classId"
   },
   DEPARTMENT: {
-    BASE: "/departments",
+    BASE: "/department",
     GET: "/",
     GET_BY_ID: "/:departmentId",
     CREATE: "/",
@@ -97,7 +97,7 @@ export const ROUTES = {
     DELETE: "/:departmentId"
   },
   PLACEMENT: {
-    BASE: "/placements",
+    BASE: "/placement",
     GET: "/",
     GET_BY_ID: "/:placementId",
     CREATE: "/",
@@ -105,7 +105,7 @@ export const ROUTES = {
     DELETE: "/:placementId"
   },
   REQUEST: {
-    BASE: "/requests",
+    BASE: "/request",
     GET: "/",
     GET_BY_ID: "/:requestId",
     CREATE: "/",
@@ -113,7 +113,7 @@ export const ROUTES = {
     DELETE: "/:requestId"
   },
   RESULT: {
-    BASE: "/results",
+    BASE: "/result",
     GET: "/",
     GET_BY_ID: "/:resultId",
     CREATE: "/",
@@ -121,7 +121,7 @@ export const ROUTES = {
     DELETE: "/:resultId"
   },
   STUDENT: {
-    BASE: "/students",
+    BASE: "/student",
     GET: "/",
     GET_BY_ID: "/:studentId",
     CREATE: "/",
@@ -129,7 +129,7 @@ export const ROUTES = {
     DELETE: "/:studentId"
   },
   TIMETABLE: {
-    BASE: "/timetables",
+    BASE: "/timetable",
     GET: "/",
     GET_BY_ID: "/:timeTableId",
     CREATE: "/",
@@ -137,7 +137,7 @@ export const ROUTES = {
     DELETE: "/:timeTableId"
   },
   EXAM: {
-    BASE: "/exams",
+    BASE: "/exam",
     GET: "/",
     GET_BY_ID: "/:examId",
     CREATE: "/",

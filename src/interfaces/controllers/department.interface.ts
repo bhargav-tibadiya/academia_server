@@ -4,6 +4,7 @@ export interface CreateDepartmentRequest extends Request {
   body: {
     name: string;
     batch: string;
+    instituteId: string;
     classes?: string[];
   }
 }
@@ -15,3 +16,9 @@ export interface UpdateDepartmentRequest extends Request {
     classes?: string[];
   }
 } 
+
+export interface DeleteDepartmentRequest extends Request {
+  params: {
+    departmentId: string;
+  }
+}

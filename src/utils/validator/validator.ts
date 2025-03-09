@@ -697,6 +697,16 @@ const Validators = {
       "string.base": "Name must be a string",
       "any.required": "Name is required",
     }),
+    departmentId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "string.base": "Department ID must be a string",
+      "any.required": "Department ID is required",
+      "any.invalid": "Department ID must be a valid ObjectId",
+    }),
     students: Joi.array().items(
       Joi.string().custom((value, helpers) => {
         if (!mongoose.Types.ObjectId.isValid(value)) {
@@ -802,6 +812,16 @@ const Validators = {
     batch: Joi.string().required().messages({
       "string.base": "Batch must be a string",
       "any.required": "Batch is required",
+    }),
+    instituteId: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }).required().messages({
+      "string.base": "Institute ID must be a string",
+      "any.required": "Institute ID is required",
+      "any.invalid": "Institute ID must be a valid ObjectId",
     }),
     classes: Joi.array().items(
       Joi.string().custom((value, helpers) => {

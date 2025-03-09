@@ -4,6 +4,7 @@ import { RequestHandler } from "express";
 
 // Models
 import Class from "@models/class.model";
+import Department from "@models/department.model";
 
 // Utils & Config
 import logger from "@services/logger";
@@ -12,7 +13,7 @@ import { responseCreator } from "@utils/helpers";
 // Types & Constants
 import { STATUS } from "@utils/constants/status";
 import { MESSAGES } from "@utils/constants/message";
-import { CreateClassRequest, ServerResponse, UpdateClassRequest } from "@interfaces/controllers";
+import { CreateClassRequest, DeleteClassRequest, ServerResponse, UpdateClassRequest } from "@interfaces/controllers";
 
 // Get All Classes & Get Class By ID
 export const getClasses: RequestHandler = async (req, res: ServerResponse) => {
@@ -64,9 +65,34 @@ export const createClass: RequestHandler = async (req: CreateClassRequest, res: 
   const classData = req.body;
 
   try {
-    const newClass = await Class.create(classData);
-    logger.info(`Created a new class: ${newClass._id}`);
+    // Check if department exists
+    if (!mongoose.Types.ObjectId.isValid(classData.departmentId)) {
+      logger.warn(`Invalid Department ObjectId format: ${classData.departmentId}`);
+      res.status(STATUS.BAD_REQUEST).json(
+        responseCreator(STATUS.BAD_REQUEST, MESSAGES.INVALID_OBJECT_ID, false)
+      );
+      return;
+    }
 
+    const department = await Department.findById(classData.departmentId);
+    if (!department) {
+      logger.warn(`Department not found: ${classData.departmentId}`);
+      res.status(STATUS.NOT_FOUND).json(
+        responseCreator(STATUS.NOT_FOUND, "Department not found", false)
+      );
+      return;
+    }
+
+    const newClass = await Class.create(classData);
+
+    // Add class to department
+    await Department.findByIdAndUpdate(
+      classData.departmentId,
+      { $push: { classes: newClass._id } },
+      { new: true }
+    );
+
+    logger.info(`Created a new class: ${newClass._id} and added to department: ${classData.departmentId}`);
     res.status(STATUS.CREATED).json(responseCreator(STATUS.CREATED, MESSAGES.DATA_CREATED, true, newClass));
     return;
   } catch (error: any) {
@@ -77,7 +103,7 @@ export const createClass: RequestHandler = async (req: CreateClassRequest, res: 
 };
 
 // Update a Class
-export const updateClass: RequestHandler = async (req: UpdateClassRequest, res: ServerResponse) => {
+export const updateClass: RequestHandler<{ classId: string }> = async (req: UpdateClassRequest, res: ServerResponse) => {
   const { classId } = req.params;
   const classData = req.body;
 
@@ -111,7 +137,7 @@ export const updateClass: RequestHandler = async (req: UpdateClassRequest, res: 
 };
 
 // Delete a Class
-export const deleteClass: RequestHandler = async (req, res: ServerResponse) => {
+export const deleteClass: RequestHandler<{ classId: string }> = async (req: DeleteClassRequest, res: ServerResponse) => {
   const { classId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(classId)) {
@@ -121,6 +147,20 @@ export const deleteClass: RequestHandler = async (req, res: ServerResponse) => {
   }
 
   try {
+    const department = await Department.findOne({ classes: classId });
+
+    if (!department) {
+      logger.warn(`No department found containing class: ${classId}`);
+      res.status(STATUS.NOT_FOUND).json(responseCreator(STATUS.NOT_FOUND, "No department found containing this class", false));
+      return;
+    }
+
+    await Department.findByIdAndUpdate(
+      department._id,
+      { $pull: { classes: classId } },
+      { new: true }
+    );
+
     const deletedClass = await Class.findByIdAndDelete(classId);
 
     if (!deletedClass) {
@@ -129,7 +169,7 @@ export const deleteClass: RequestHandler = async (req, res: ServerResponse) => {
       return;
     }
 
-    logger.info(`Deleted class: ${classId}`);
+    logger.info(`Deleted class: ${classId} and removed from department: ${department._id}`);
     res.status(STATUS.OK).json(responseCreator(STATUS.OK, MESSAGES.DATA_DELETED, true));
     return;
   } catch (error: any) {
@@ -137,4 +177,4 @@ export const deleteClass: RequestHandler = async (req, res: ServerResponse) => {
     res.status(STATUS.INTERNAL_SERVER_ERROR).json(responseCreator(STATUS.INTERNAL_SERVER_ERROR, MESSAGES.INTERNAL_SERVER_ERROR, false));
     return;
   }
-}; 
+};

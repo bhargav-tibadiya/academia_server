@@ -178,6 +178,7 @@ export interface UpdateUserRequest extends Request {
 export interface CreateClassRequest extends Request {
   body: {
     name: string;
+    departmentId: string;
     students?: string[];
     timeTableId?: string;
     exams?: string[];
@@ -192,5 +193,14 @@ export interface UpdateClassRequest extends Request {
     timeTableId?: string;
     exams?: string[];
     updates?: string[];
+  },
+  params: {
+    classId: string;
   }
 } 
+
+export interface DeleteClassRequest extends Request {
+  params: {
+    classId: string;
+  }
+}

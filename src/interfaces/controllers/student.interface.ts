@@ -32,4 +32,13 @@ export interface UpdateStudentRequest extends Request {
     fees?: string[];
     hallTickets?: string[];
   }
-} 
+  params: {
+    studentId: string;
+  }
+}
+
+export interface DeleteStudentRequest extends Request {
+  params: {
+    studentId: string;
+  }
+}
