@@ -68,6 +68,10 @@ interface SchemaKeyType {
     CREATE: "createRequest",
     UPDATE: "updateRequest",
   },
+  EXAM: {
+    CREATE: "createExam",
+    UPDATE: "updateExam",
+  },
 }
 
 export const SCHEMAKEY: SchemaKeyType = {
@@ -156,5 +160,10 @@ export const SCHEMAKEY: SchemaKeyType = {
   REQUEST: {
     CREATE: "createRequest",
     UPDATE: "updateRequest",
+  },
+  // 
+  EXAM: {
+    CREATE: "createExam",
+    UPDATE: "updateExam",
   },
 }

@@ -1360,6 +1360,174 @@ const Validators = {
       "any.invalid": "Student ID must be a valid ObjectId",
     })
   }),
+
+  // --> EXAM <--
+  createExam: Joi.object({
+    title: Joi.string().required().messages({
+      "string.base": "Title must be a string",
+      "any.required": "Title is required",
+    }),
+    description: Joi.string().optional().messages({
+      "string.base": "Description must be a string",
+    }),
+    questions: Joi.array().items(
+      Joi.object({
+        question: Joi.string().required().messages({
+          "string.base": "Question must be a string",
+          "any.required": "Question is required",
+        }),
+        type: Joi.string().valid("MCQ", "Input").required().messages({
+          "string.base": "Question type must be a string",
+          "any.required": "Question type is required",
+          "any.only": "Question type must be either 'MCQ' or 'Input'",
+        }),
+        options: Joi.array().items(
+          Joi.object({
+            key: Joi.string().when("../type", {
+              is: "MCQ",
+              then: Joi.required(),
+              otherwise: Joi.forbidden(),
+            }).messages({
+              "string.base": "Option key must be a string",
+              "any.required": "Option key is required for MCQ questions",
+            }),
+            value: Joi.string().when("../type", {
+              is: "MCQ",
+              then: Joi.required(),
+              otherwise: Joi.forbidden(),
+            }).messages({
+              "string.base": "Option value must be a string",
+              "any.required": "Option value is required for MCQ questions",
+            }),
+          })
+        ).when("type", {
+          is: "MCQ",
+          then: Joi.array().required().min(2),
+          otherwise: Joi.forbidden(),
+        }).messages({
+          "array.base": "Options must be an array",
+          "array.min": "MCQ questions must have at least 2 options",
+        }),
+        answerKey: Joi.string().when("type", {
+          is: "MCQ",
+          then: Joi.required(),
+          otherwise: Joi.forbidden(),
+        }).messages({
+          "string.base": "Answer key must be a string",
+          "any.required": "Answer key is required for MCQ questions",
+        }),
+        correctAnswer: Joi.string().when("type", {
+          is: "Input",
+          then: Joi.required(),
+          otherwise: Joi.forbidden(),
+        }).messages({
+          "string.base": "Correct answer must be a string",
+          "any.required": "Correct answer is required for Input questions",
+        }),
+      })
+    ).required().min(1).messages({
+      "array.base": "Questions must be an array",
+      "array.min": "At least one question is required",
+      "any.required": "Questions are required",
+    }),
+    startTime: Joi.date().required().messages({
+      "date.base": "Start time must be a valid date",
+      "any.required": "Start time is required",
+    }),
+    endTime: Joi.date().required().messages({
+      "date.base": "End time must be a valid date",
+      "any.required": "End time is required",
+    }),
+  }).custom((value, helpers) => {
+    if (new Date(value.startTime) >= new Date(value.endTime)) {
+      return helpers.error("custom.endTime", {
+        message: "End time must be after start time",
+      });
+    }
+    return value;
+  }),
+
+  updateExam: Joi.object({
+    title: Joi.string().messages({
+      "string.base": "Title must be a string",
+    }),
+    description: Joi.string().messages({
+      "string.base": "Description must be a string",
+    }),
+    questions: Joi.array().items(
+      Joi.object({
+        question: Joi.string().messages({
+          "string.base": "Question must be a string",
+        }),
+        type: Joi.string().valid("MCQ", "Input").messages({
+          "string.base": "Question type must be a string",
+          "any.only": "Question type must be either 'MCQ' or 'Input'",
+        }),
+        options: Joi.array().items(
+          Joi.object({
+            key: Joi.string().when("../type", {
+              is: "MCQ",
+              then: Joi.required(),
+              otherwise: Joi.forbidden(),
+            }).messages({
+              "string.base": "Option key must be a string",
+              "any.required": "Option key is required for MCQ questions",
+            }),
+            value: Joi.string().when("../type", {
+              is: "MCQ",
+              then: Joi.required(),
+              otherwise: Joi.forbidden(),
+            }).messages({
+              "string.base": "Option value must be a string",
+              "any.required": "Option value is required for MCQ questions",
+            }),
+          })
+        ).when("type", {
+          is: "MCQ",
+          then: Joi.array().min(2),
+          otherwise: Joi.forbidden(),
+        }).messages({
+          "array.base": "Options must be an array",
+          "array.min": "MCQ questions must have at least 2 options",
+        }),
+        answerKey: Joi.string().when("type", {
+          is: "MCQ",
+          then: Joi.required(),
+          otherwise: Joi.forbidden(),
+        }).messages({
+          "string.base": "Answer key must be a string",
+          "any.required": "Answer key is required for MCQ questions",
+        }),
+        correctAnswer: Joi.string().when("type", {
+          is: "Input",
+          then: Joi.required(),
+          otherwise: Joi.forbidden(),
+        }).messages({
+          "string.base": "Correct answer must be a string",
+          "any.required": "Correct answer is required for Input questions",
+        }),
+      })
+    ).messages({
+      "array.base": "Questions must be an array",
+    }),
+    startTime: Joi.date().messages({
+      "date.base": "Start time must be a valid date",
+    }),
+    endTime: Joi.date().messages({
+      "date.base": "End time must be a valid date",
+    }),
+  }).custom((value, helpers) => {
+    if (value.startTime && value.endTime) {
+      if (new Date(value.startTime) >= new Date(value.endTime)) {
+        return helpers.error("custom.endTime", {
+          message: "End time must be after start time",
+        });
+      }
+    }
+    return value;
+  }).min(1).messages({
+    "object.min": "At least one field must be provided for update",
+  }),
 }
 
 export default Validators

@@ -135,5 +135,13 @@ export const ROUTES = {
     CREATE: "/",
     UPDATE: "/:timeTableId",
     DELETE: "/:timeTableId"
+  },
+  EXAM: {
+    BASE: "/exams",
+    GET: "/",
+    GET_BY_ID: "/:examId",
+    CREATE: "/",
+    UPDATE: "/:examId",
+    DELETE: "/:examId"
   }
 };

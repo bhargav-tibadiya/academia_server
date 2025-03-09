@@ -19,6 +19,7 @@ import RequestRouter from '@routes/request.routes'
 import ResultRouter from '@routes/result.routes'
 import StudentRouter from '@routes/student.routes'
 import TimeTableRouter from '@routes/timetable.routes'
+import ExamRouter from '@routes/exam.routes'
 
 // Middleware
 import notFoundHandler from "@middleware/notfound";
@@ -45,7 +46,7 @@ router.use(ROUTES.REQUEST.BASE, RequestRouter);
 router.use(ROUTES.RESULT.BASE, ResultRouter);
 router.use(ROUTES.STUDENT.BASE, StudentRouter);
 router.use(ROUTES.TIMETABLE.BASE, TimeTableRouter);
-
+router.use(ROUTES.EXAM.BASE, ExamRouter);
 router.all(ROUTES.ALL, notFoundHandler);
 
 export default router;
