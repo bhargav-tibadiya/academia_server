@@ -28,6 +28,8 @@ tags:
     description: Manage and update Class details.
   - name: Department
     description: Manage and update Department details.
+  - name: Exam
+    description: Manage and update Exam details.
   - name: Fees
     description: Handle student fees, payments, and financial records.
   - name: HallTicket
@@ -225,6 +227,120 @@ components:
         data:
           $ref: '#/components/schemas/TimetableData'
 
+    Question:
+      type: object
+      required:
+        - question
+        - type
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+        question:
+          type: string
+          example: "What is the capital of France?"
+        type:
+          type: string
+          enum: [MCQ, Input]
+          example: "MCQ"
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                example: "A"
+              value:
+                type: string
+                example: "Paris"
+        answerKey:
+          type: string
+          example: "A"
+        correctAnswer:
+          type: string
+          example: "Paris"
+
+    Response:
+      type: object
+      required:
+        - userId
+        - startTime
+        - endTime
+        - responses
+      properties:
+        userId:
+          type: string
+          format: ObjectId
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        responses:
+          type: array
+          items:
+            type: object
+            properties:
+              questionId:
+                type: string
+                format: ObjectId
+              answer:
+                type: string
+
+    Exam:
+      type: object
+      required:
+        - title
+        - questions
+        - startTime
+        - endTime
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+        title:
+          type: string
+          example: "Mid-term Examination"
+        description:
+          type: string
+          example: "Computer Science mid-term examination"
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+        responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Response'
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                format: ObjectId
+              score:
+                type: number
+                example: 85
+              total:
+                type: number
+                example: 100
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
 # ----------->> AUTH <<----------
 paths:
   /api/v1/auth/signup:
@@ -3816,6 +3932,8 @@ paths:
         - Class
       summary: Get all classes
       description: Retrieve a list of all classes
+      security:
+        - bearerAuth: []
       responses:
         200:
           description: Classes retrieved successfully
@@ -3950,6 +4068,8 @@ paths:
         - Class
       summary: Get class by ID
       description: Retrieve a specific class by its ID
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -4681,6 +4801,8 @@ paths:
         - Placement
       summary: Get all placements
       description: Retrieve a list of all placement opportunities
+      security:
+        - bearerAuth: []
       responses:
         200:
           description: Successfully retrieved placements
@@ -4814,6 +4936,8 @@ paths:
         - Placement
       summary: Get placement by ID
       description: Retrieve a specific placement by its ID
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: placementId
@@ -4921,6 +5045,8 @@ paths:
         - Profile
       summary: Get all profiles
       description: Retrieve a list of all user profiles
+      security:
+        - bearerAuth: []
       responses:
         200:
           description: Successfully retrieved profiles
@@ -5024,6 +5150,8 @@ paths:
         - Profile
       summary: Get profile by ID
       description: Retrieve a specific profile by its ID
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: profileId
@@ -5107,6 +5235,8 @@ paths:
         - Timetable
       summary: Get all timetables
       description: Retrieve a list of all timetables
+      security:
+        - bearerAuth: []
       responses:
         200:
           description: Successfully retrieved timetables
@@ -5168,6 +5298,8 @@ paths:
         - Timetable
       summary: Get timetable by ID
       description: Retrieve a specific timetable by its ID
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: timeTableId
@@ -5249,4 +5381,250 @@ paths:
                     type: string
                     example: "Data deleted successfully"
 
-    
+  # ----------->> EXAM <<----------
+  /api/exam:
+    get:
+      tags:
+        - Exam
+      summary: Get all exams
+      description: Retrieve a list of all exams with populated user information
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully retrieved exams
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully"
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Exam'
+    post:
+      tags:
+        - Exam
+      summary: Create a new exam
+      description: Create a new exam with questions and time settings
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - questions
+                - startTime
+                - endTime
+              properties:
+                title:
+                  type: string
+                  example: "Mid-term Examination"
+                description:
+                  type: string
+                  example: "Computer Science mid-term examination"
+                questions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Question'
+                startTime:
+                  type: string
+                  format: date-time
+                  example: "2024-03-20T09:00:00Z"
+                endTime:
+                  type: string
+                  format: date-time
+                  example: "2024-03-20T12:00:00Z"
+      responses:
+        '201':
+          description: Exam created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully"
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Exam'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 400
+                  message:
+                    type: string
+                    example: "End time must be after start time"
+                  success:
+                    type: boolean
+                    example: false
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/exam/{examId}:
+    get:
+      tags:
+        - Exam
+      summary: Get exam by ID
+      description: Retrieve a specific exam by its ID with populated user information
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: examId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+          description: The ID of the exam to retrieve
+      responses:
+        '200':
+          description: Successfully retrieved exam
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully"
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Exam'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Exam
+      summary: Update exam
+      description: Update an existing exam by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: examId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+          description: The ID of the exam to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                questions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Question'
+                startTime:
+                  type: string
+                  format: date-time
+                endTime:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: Exam updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data updated successfully"
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Exam'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Exam
+      summary: Delete exam
+      description: Delete an exam by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: examId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+          description: The ID of the exam to delete
+      responses:
+        '200':
+          description: Exam deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully"
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
