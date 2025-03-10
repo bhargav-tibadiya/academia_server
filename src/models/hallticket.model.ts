@@ -1,4 +1,3 @@
-// models/HallTicket.js
 import mongoose, { Schema } from "mongoose";
 
 const HallTicketSchema = new Schema(

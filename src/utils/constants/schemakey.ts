@@ -36,13 +36,41 @@ interface SchemaKeyType {
     CREATE: "createHallTicket",
     UPDATE: "updateHallTicket",
   },
-  CLASS:{
-    CREATE:"createClass",
-    UPDATE:"updateClass",
+  NOTIFICATION: {
+    CREATE: "createNotification",
+    UPDATE: "updateNotification",
   },
-  TIMETABLE:{
-    CREATE:"createTimeTable",
-    UPDATE:"updateTimeTable",
+  CLASS: {
+    CREATE: "createClass",
+    UPDATE: "updateClass",
+  },
+  DEPARTMENT: {
+    CREATE: "createDepartment",
+    UPDATE: "updateDepartment",
+  },
+  PLACEMENT: {
+    CREATE: "createPlacement",
+    UPDATE: "updatePlacement",
+  },
+  RESULT: {
+    CREATE: "createResult",
+    UPDATE: "updateResult",
+  },
+  STUDENT: {
+    CREATE: "createStudent",
+    UPDATE: "updateStudent",
+  },
+  TIMETABLE: {
+    CREATE: "createTimeTable",
+    UPDATE: "updateTimeTable",
+  },
+  REQUEST: {
+    CREATE: "createRequest",
+    UPDATE: "updateRequest",
+  },
+  EXAM: {
+    CREATE: "createExam",
+    UPDATE: "updateExam",
   },
 }
 
@@ -94,13 +122,48 @@ export const SCHEMAKEY: SchemaKeyType = {
     UPDATE: "updateHallTicket",
   },
   // 
+  NOTIFICATION: {
+    CREATE: "createNotification",
+    UPDATE: "updateNotification",
+  },
+  // 
   CLASS: {
     CREATE: "createClass",
     UPDATE: "updateClass",
   },
   // 
-  TIMETABLE:{
-    CREATE:"createTimeTable",
-    UPDATE:"updateTimeTable",
+  DEPARTMENT: {
+    CREATE: "createDepartment",
+    UPDATE: "updateDepartment",
+  },
+  // 
+  PLACEMENT: {
+    CREATE: "createPlacement",
+    UPDATE: "updatePlacement",
+  },
+  // 
+  RESULT: {
+    CREATE: "createResult",
+    UPDATE: "updateResult",
+  },
+  // 
+  STUDENT: {
+    CREATE: "createStudent",
+    UPDATE: "updateStudent",
+  },
+  // 
+  TIMETABLE: {
+    CREATE: "createTimeTable",
+    UPDATE: "updateTimeTable",
+  },
+  // 
+  REQUEST: {
+    CREATE: "createRequest",
+    UPDATE: "updateRequest",
+  },
+  // 
+  EXAM: {
+    CREATE: "createExam",
+    UPDATE: "updateExam",
   },
 }

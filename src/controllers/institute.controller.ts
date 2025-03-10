@@ -26,7 +26,12 @@ export const getInstitutes: RequestHandler = async (req, res: ServerResponse) =>
         return;
       }
 
-      const institute = await Institute.findById(instituteId);
+      const institute = await Institute.findById(instituteId)
+        .populate({
+          path: "departments",
+          select: "name batch"
+        });
+      console.log(institute);
       if (!institute) {
         logger.warn(`${MESSAGES.RESOURCE_NOT_FOUND}: ${instituteId}`);
         res.status(STATUS.NOT_FOUND).json(responseCreator(STATUS.NOT_FOUND, MESSAGES.RESOURCE_NOT_FOUND, false));
@@ -39,7 +44,10 @@ export const getInstitutes: RequestHandler = async (req, res: ServerResponse) =>
     }
 
     // If no instituteId, fetch all institutes
-    const institutes = await Institute.find();
+    const institutes = await Institute.find().populate({
+      path: "departments",
+      select: "name batch"
+    });
     logger.info("Fetched all institutes");
     res.status(STATUS.OK).json(responseCreator(STATUS.OK, MESSAGES.DATA_FETCHED, true, institutes));
     return;

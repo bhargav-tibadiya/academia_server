@@ -1,4 +1,3 @@
-// models/Fee.js
 import mongoose, { Schema } from "mongoose";
 
 const FeeSchema = new Schema(

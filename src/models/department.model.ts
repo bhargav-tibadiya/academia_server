@@ -1,7 +1,6 @@
 // Packages
 import mongoose, { Schema } from "mongoose";
 
-
 const DepartmentSchema = new Schema(
   {
     name: {

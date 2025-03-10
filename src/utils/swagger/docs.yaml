@@ -28,6 +28,8 @@ tags:
     description: Manage and update Class details.
   - name: Department
     description: Manage and update Department details.
+  - name: Exam
+    description: Manage and update Exam details.
   - name: Fees
     description: Handle student fees, payments, and financial records.
   - name: HallTicket
@@ -62,7 +64,283 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  schemas:
+    PlacementResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        code:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: "Data fetched successfully"
+        data:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: "507f1f77bcf86cd799439011"
+            companyName:
+              type: string
+              example: "Tech Corp"
+            companyImage:
+              type: string
+              example: "https://example.com/company-logo.png"
+            jobRole:
+              type: string
+              example: "Software Engineer"
+            agreement:
+              type: string
+              example: "Full-time"
+            package:
+              type: string
+              example: "12 LPA"
+            description:
+              type: string
+              example: "Software Engineer position for fresh graduates"
+            requirement:
+              type: string
+              example: "B.Tech in Computer Science, min 7 CGPA"
+            deadline:
+              type: string
+              format: date-time
+            technologies:
+              type: string
+              example: "Java-Python-React"
+            appliedStudents:
+              type: array
+              items:
+                type: string
+                example: "507f1f77bcf86cd799439012"
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
 
+    ProfileData:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: "507f1f77bcf86cd799439011"
+        firstName:
+          type: string
+          example: "John"
+        middleName:
+          type: string
+          example: "William"
+        lastName:
+          type: string
+          example: "Doe"
+        gender:
+          type: string
+          enum: ["Male", "Female", "Other"]
+          example: "Male"
+        birthDate:
+          type: string
+          format: date-time
+        bloodGroup:
+          type: string
+          example: "O+"
+        address:
+          type: string
+          example: "123 Main St, City"
+        contact:
+          type: string
+          example: "1234567890"
+        fatherName:
+          type: string
+          example: "James Doe"
+        fatherContact:
+          type: string
+          example: "9876543210"
+        motherName:
+          type: string
+          example: "Jane Doe"
+        motherContact:
+          type: string
+          example: "9876543211"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    ProfileResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        code:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: "Data fetched successfully"
+        data:
+          $ref: '#/components/schemas/ProfileData'
+
+    TimetableData:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "507f1f77bcf86cd799439011"
+        classId:
+          type: string
+          example: "507f1f77bcf86cd799439012"
+        timetable:
+          type: object
+          example: 
+          timetable:
+            type: object
+            example:
+              Monday:
+                "9:00": "Mathematics"
+                "10:00": "Physics"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    TimetableResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        code:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: "Data fetched successfully"
+        data:
+          $ref: '#/components/schemas/TimetableData'
+
+    Question:
+      type: object
+      required:
+        - question
+        - type
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+        question:
+          type: string
+          example: "What is the capital of France?"
+        type:
+          type: string
+          enum: [MCQ, Input]
+          example: "MCQ"
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                example: "A"
+              value:
+                type: string
+                example: "Paris"
+        answerKey:
+          type: string
+          example: "A"
+        correctAnswer:
+          type: string
+          example: "Paris"
+
+    Response:
+      type: object
+      required:
+        - userId
+        - startTime
+        - endTime
+        - responses
+      properties:
+        userId:
+          type: string
+          format: ObjectId
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        responses:
+          type: array
+          items:
+            type: object
+            properties:
+              questionId:
+                type: string
+                format: ObjectId
+              answer:
+                type: string
+
+    Exam:
+      type: object
+      required:
+        - title
+        - questions
+        - startTime
+        - endTime
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+        title:
+          type: string
+          example: "Mid-term Examination"
+        description:
+          type: string
+          example: "Computer Science mid-term examination"
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+        responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Response'
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                format: ObjectId
+              score:
+                type: number
+                example: 85
+              total:
+                type: number
+                example: 100
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
 # ----------->> AUTH <<----------
 paths:
   /api/v1/auth/signup:
@@ -2146,3 +2424,3207 @@ paths:
                   message:
                     type: string
                     example: "Fee deleted successfully."
+
+  # ----------->> HALL TICKET <<----------
+  /api/v1/hallticket:
+    get:
+      summary: Get all hall tickets
+      description: This endpoint allows you to retrieve all hall tickets.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      responses:
+        200:
+          description: Successfully fetched hall tickets.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "67c5d4295baf78fdded2f358"
+                        seatNo:
+                          type: number
+                          example: 101
+                        name:
+                          type: string
+                          example: "John Doe"
+                        institute:
+                          type: string
+                          example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                        department:
+                          type: string
+                          example: "Computer Engineering"
+                        schedule:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              subject:
+                                type: string
+                                example: "Object Oriented Programming"
+                              date:
+                                type: string
+                                format: date-time
+                                example: "2025-03-15T00:00:00.000Z"
+                              startTime:
+                                type: string
+                                format: date-time
+                                example: "2025-03-15T09:00:00.000Z"
+                              endTime:
+                                type: string
+                                format: date-time
+                                example: "2025-03-15T12:00:00.000Z"
+                              center:
+                                type: string
+                                example: "Main Campus"
+                              roomNo:
+                                type: string
+                                example: "101"
+                              block:
+                                type: number
+                                example: 1
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+    post:
+      summary: Create a new hall ticket
+      description: This endpoint allows you to create a new hall ticket.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - seatNo
+                - name
+                - institute
+                - department
+                - schedule
+              properties:
+                seatNo:
+                  type: number
+                  example: 101
+                name:
+                  type: string
+                  example: "John Doe"
+                institute:
+                  type: string
+                  example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                department:
+                  type: string
+                  example: "Computer Engineering"
+                schedule:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - subject
+                      - date
+                      - startTime
+                      - endTime
+                      - center
+                      - roomNo
+                      - block
+                    properties:
+                      subject:
+                        type: string
+                        example: "Object Oriented Programming"
+                      date:
+                        type: string
+                        format: date
+                        example: "2025-03-15"
+                      startTime:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T09:00:00.000Z"
+                      endTime:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T12:00:00.000Z"
+                      center:
+                        type: string
+                        example: "Main Campus"
+                      roomNo:
+                        type: string
+                        example: "101"
+                      block:
+                        type: number
+                        example: 1
+      responses:
+        201:
+          description: Hall ticket created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      seatNo:
+                        type: number
+                        example: 101
+                      name:
+                        type: string
+                        example: "John Doe"
+                      institute:
+                        type: string
+                        example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                      department:
+                        type: string
+                        example: "Computer Engineering"
+                      schedule:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            subject:
+                              type: string
+                              example: "Object Oriented Programming"
+                            date:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T00:00:00.000Z"
+                            startTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T09:00:00.000Z"
+                            endTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T12:00:00.000Z"
+                            center:
+                              type: string
+                              example: "Main Campus"
+                            roomNo:
+                              type: string
+                              example: "101"
+                            block:
+                              type: number
+                              example: 1
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+
+  /api/v1/hallticket/{hallTicketId}:
+    get:
+      summary: Get hall ticket by ID
+      description: This endpoint allows you to retrieve a hall ticket by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      parameters:
+        - name: hallTicketId
+          in: path
+          required: true
+          description: ID of the hall ticket to retrieve
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Successfully fetched hall ticket.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      seatNo:
+                        type: number
+                        example: 101
+                      name:
+                        type: string
+                        example: "John Doe"
+                      institute:
+                        type: string
+                        example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                      department:
+                        type: string
+                        example: "Computer Engineering"
+                      schedule:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            subject:
+                              type: string
+                              example: "Object Oriented Programming"
+                            date:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T00:00:00.000Z"
+                            startTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T09:00:00.000Z"
+                            endTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T12:00:00.000Z"
+                            center:
+                              type: string
+                              example: "Main Campus"
+                            roomNo:
+                              type: string
+                              example: "101"
+                            block:
+                              type: number
+                              example: 1
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+    put:
+      summary: Update a hall ticket
+      description: This endpoint allows you to update a hall ticket by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      parameters:
+        - name: hallTicketId
+          in: path
+          required: true
+          description: ID of the hall ticket to update
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                seatNo:
+                  type: number
+                  example: 101
+                name:
+                  type: string
+                  example: "John Doe"
+                institute:
+                  type: string
+                  example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                department:
+                  type: string
+                  example: "Computer Engineering"
+                schedule:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      subject:
+                        type: string
+                        example: "Object Oriented Programming"
+                      date:
+                        type: string
+                        format: date
+                        example: "2025-03-15"
+                      startTime:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T09:00:00.000Z"
+                      endTime:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T12:00:00.000Z"
+                      center:
+                        type: string
+                        example: "Main Campus"
+                      roomNo:
+                        type: string
+                        example: "101"
+                      block:
+                        type: number
+                        example: 1
+      responses:
+        200:
+          description: Hall ticket updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data updated successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      seatNo:
+                        type: number
+                        example: 101
+                      name:
+                        type: string
+                        example: "John Doe"
+                      institute:
+                        type: string
+                        example: "Chhotubhai Gopalbhai Patel Institute of Technology"
+                      department:
+                        type: string
+                        example: "Computer Engineering"
+                      schedule:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            subject:
+                              type: string
+                              example: "Object Oriented Programming"
+                            date:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T00:00:00.000Z"
+                            startTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T09:00:00.000Z"
+                            endTime:
+                              type: string
+                              format: date-time
+                              example: "2025-03-15T12:00:00.000Z"
+                            center:
+                              type: string
+                              example: "Main Campus"
+                            roomNo:
+                              type: string
+                              example: "101"
+                            block:
+                              type: number
+                              example: 1
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+    delete:
+      summary: Delete a hall ticket
+      description: This endpoint allows you to delete a hall ticket by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - HallTicket
+      parameters:
+        - name: hallTicketId
+          in: path
+          required: true
+          description: ID of the hall ticket to delete
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Hall ticket deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully."
+                  data:
+                    type: object
+
+  # ----------->> NOTIFICATION <<----------
+  /api/v1/notification:
+    get:
+      summary: Get all notifications
+      description: This endpoint allows you to retrieve all notifications, sorted by date in descending order.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      responses:
+        200:
+          description: Successfully fetched notifications.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "67c5d4295baf78fdded2f358"
+                        date:
+                          type: string
+                          format: date-time
+                          example: "2025-03-15T00:00:00.000Z"
+                        content:
+                          type: string
+                          example: "Important announcement about upcoming examinations"
+                        link:
+                          type: string
+                          example: "https://example.com/announcements/exam-schedule"
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-03-01T00:00:00.000Z"
+    post:
+      summary: Create a new notification
+      description: This endpoint allows you to create a new notification.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - date
+                - content
+                - link
+              properties:
+                date:
+                  type: string
+                  format: date
+                  example: "2025-03-15"
+                content:
+                  type: string
+                  example: "Important announcement about upcoming examinations"
+                link:
+                  type: string
+                  example: "https://example.com/announcements/exam-schedule"
+      responses:
+        201:
+          description: Notification created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T00:00:00.000Z"
+                      content:
+                        type: string
+                        example: "Important announcement about upcoming examinations"
+                      link:
+                        type: string
+                        example: "https://example.com/announcements/exam-schedule"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+
+  /api/v1/notification/{notificationId}:
+    get:
+      summary: Get notification by ID
+      description: This endpoint allows you to retrieve a notification by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          description: ID of the notification to retrieve
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Successfully fetched notification.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T00:00:00.000Z"
+                      content:
+                        type: string
+                        example: "Important announcement about upcoming examinations"
+                      link:
+                        type: string
+                        example: "https://example.com/announcements/exam-schedule"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+    put:
+      summary: Update a notification
+      description: This endpoint allows you to update a notification by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          description: ID of the notification to update
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date
+                  example: "2025-03-15"
+                content:
+                  type: string
+                  example: "Important announcement about upcoming examinations"
+                link:
+                  type: string
+                  example: "https://example.com/announcements/exam-schedule"
+      responses:
+        200:
+          description: Notification updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data updated successfully."
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "67c5d4295baf78fdded2f358"
+                      date:
+                        type: string
+                        format: date-time
+                        example: "2025-03-15T00:00:00.000Z"
+                      content:
+                        type: string
+                        example: "Important announcement about upcoming examinations"
+                      link:
+                        type: string
+                        example: "https://example.com/announcements/exam-schedule"
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-03-01T00:00:00.000Z"
+    delete:
+      summary: Delete a notification
+      description: This endpoint allows you to delete a notification by its ID.
+      security:
+        - bearerAuth: []
+      tags:
+        - Notification
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          description: ID of the notification to delete
+          schema:
+            type: string
+            example: "67c5d4295baf78fdded2f358"
+      responses:
+        200:
+          description: Notification deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully."
+                  data:
+                    type: object
+
+  # ----------->> RESULT <<----------
+  /api/v1/result:
+    get:
+      summary: Get all results
+      security:
+        - bearerAuth: []
+      tags:
+        - Result
+      responses:
+        200:
+          description: Results retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                        semester:
+                          type: number
+                          example: 1
+                        time:
+                          type: string
+                          example: "Winter 2025"
+                        regular:
+                          type: boolean
+                          example: true
+                        result:
+                          type: object
+                          properties:
+                            overallGrade:
+                              type: string
+                              example: "A"
+                            SGPA:
+                              type: number
+                              example: 9.2
+                            CGPA:
+                              type: number
+                              example: 9.0
+                            subjects:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  code:
+                                    type: string
+                                    example: "CS101"
+                                  name:
+                                    type: string
+                                    example: "Introduction to Programming"
+                                  type:
+                                    type: string
+                                    enum: ["theory", "practical"]
+                                    example: "theory"
+                                  credit:
+                                    type: number
+                                    example: 4
+                                  grade:
+                                    type: string
+                                    example: "A"
+    post:
+      summary: Create a new result
+      security:
+        - bearerAuth: []
+      tags:
+        - Result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - semester
+                - time
+                - regular
+                - result
+              properties:
+                semester:
+                  type: number
+                  example: 1
+                time:
+                  type: string
+                  example: "Winter 2025"
+                regular:
+                  type: boolean
+                  example: true
+                result:
+                  type: object
+                  required:
+                    - overallGrade
+                    - SGPA
+                    - CGPA
+                    - subjects
+                  properties:
+                    overallGrade:
+                      type: string
+                      example: "A"
+                    SGPA:
+                      type: number
+                      example: 9.2
+                    CGPA:
+                      type: number
+                      example: 9.0
+                    subjects:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - code
+                          - name
+                          - type
+                          - credit
+                          - grade
+                        properties:
+                          code:
+                            type: string
+                            example: "CS101"
+                          name:
+                            type: string
+                            example: "Introduction to Programming"
+                          type:
+                            type: string
+                            enum: ["theory", "practical"]
+                            example: "theory"
+                          credit:
+                            type: number
+                            example: 4
+                          grade:
+                            type: string
+                            example: "A"
+      responses:
+        201:
+          description: Result created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      semester:
+                        type: number
+                        example: 1
+
+  /api/v1/result/{resultId}:
+    get:
+      summary: Get result by ID
+      security:
+        - bearerAuth: []
+      tags:
+        - Result
+      parameters:
+        - name: resultId
+          in: path
+          required: true
+          description: ID of the result to retrieve
+          schema:
+            type: string
+            example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Result retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      semester:
+                        type: number
+                        example: 1
+                      time:
+                        type: string
+                        example: "Winter 2025"
+                      regular:
+                        type: boolean
+                        example: true
+                      result:
+                        type: object
+                        properties:
+                          overallGrade:
+                            type: string
+                            example: "A"
+                          SGPA:
+                            type: number
+                            example: 9.2
+                          CGPA:
+                            type: number
+                            example: 9.0
+                          subjects:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                code:
+                                  type: string
+                                  example: "CS101"
+                                name:
+                                  type: string
+                                  example: "Introduction to Programming"
+                                type:
+                                  type: string
+                                  enum: ["theory", "practical"]
+                                  example: "theory"
+                                credit:
+                                  type: number
+                                  example: 4
+                                grade:
+                                  type: string
+                                  example: "A"
+    put:
+      summary: Update result by ID
+      security:
+        - bearerAuth: []
+      tags:
+        - Result
+      parameters:
+        - name: resultId
+          in: path
+          required: true
+          description: ID of the result to update
+          schema:
+            type: string
+            example: "507f1f77bcf86cd799439011"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                semester:
+                  type: number
+                  example: 1
+                time:
+                  type: string
+                  example: "Winter 2025"
+                regular:
+                  type: boolean
+                  example: true
+                result:
+                  type: object
+                  properties:
+                    overallGrade:
+                      type: string
+                      example: "A"
+                    SGPA:
+                      type: number
+                      example: 9.2
+                    CGPA:
+                      type: number
+                      example: 9.0
+                    subjects:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          code:
+                            type: string
+                            example: "CS101"
+                          name:
+                            type: string
+                            example: "Introduction to Programming"
+                          type:
+                            type: string
+                            enum: ["theory", "practical"]
+                            example: "theory"
+                          credit:
+                            type: number
+                            example: 4
+                          grade:
+                            type: string
+                            example: "A"
+      responses:
+        200:
+          description: Result updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      semester:
+                        type: number
+                        example: 1
+    delete:
+      summary: Delete result by ID
+      security:
+        - bearerAuth: []
+      tags:
+        - Result
+      parameters:
+        - name: resultId
+          in: path
+          required: true
+          description: ID of the result to delete
+          schema:
+            type: string
+            example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Result deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Result deleted successfully"
+
+  # ----------->> STUDENT <<----------
+  /api/v1/student:
+    get:
+      summary: Get all students
+      security:
+        - bearerAuth: []
+      tags:
+        - Student
+      responses:
+        200:
+          description: Students retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                        enrollmentNo:
+                          type: number
+                          example: 20201001
+                        userId:
+                          type: string
+                          example: "507f1f77bcf86cd799439012"
+                        profileId:
+                          type: string
+                          example: "507f1f77bcf86cd799439013"
+                        instituteId:
+                          type: string
+                          example: "507f1f77bcf86cd799439014"
+                        departmentId:
+                          type: string
+                          example: "507f1f77bcf86cd799439015"
+                        classId:
+                          type: string
+                          example: "507f1f77bcf86cd799439016"
+                        attendanceId:
+                          type: string
+                          example: "507f1f77bcf86cd799439017"
+                        requests:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439018"
+                        results:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439019"
+                        notifications:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439020"
+                        fees:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439021"
+                        hallTickets:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439022"
+    post:
+      summary: Create a new student
+      security:
+        - bearerAuth: []
+      tags:
+        - Student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - profileId
+                - instituteId
+                - departmentId
+                - classId
+              properties:
+                enrollmentNo:
+                  type: number
+                  example: 20201001
+                userId:
+                  type: string
+                  example: "507f1f77bcf86cd799439012"
+                profileId:
+                  type: string
+                  example: "507f1f77bcf86cd799439013"
+                instituteId:
+                  type: string
+                  example: "507f1f77bcf86cd799439014"
+                departmentId:
+                  type: string
+                  example: "507f1f77bcf86cd799439015"
+                classId:
+                  type: string
+                  example: "507f1f77bcf86cd799439016"
+                attendanceId:
+                  type: string
+                  example: "507f1f77bcf86cd799439017"
+                requests:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439018"
+                results:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439019"
+                notifications:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439020"
+                fees:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439021"
+                hallTickets:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439022"
+      responses:
+        201:
+          description: Student created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      enrollmentNo:
+                        type: number
+                        example: 20201001
+
+  /api/v1/student/{studentId}:
+    get:
+      summary: Get student by ID
+      security:
+        - bearerAuth: []
+      tags:
+        - Student
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          description: ID of the student to retrieve
+          schema:
+            type: string
+            example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Student retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      enrollmentNo:
+                        type: number
+                        example: 20201001
+                      userId:
+                        type: string
+                        example: "507f1f77bcf86cd799439012"
+                      profileId:
+                        type: string
+                        example: "507f1f77bcf86cd799439013"
+                      instituteId:
+                        type: string
+                        example: "507f1f77bcf86cd799439014"
+                      departmentId:
+                        type: string
+                        example: "507f1f77bcf86cd799439015"
+                      classId:
+                        type: string
+                        example: "507f1f77bcf86cd799439016"
+                      attendanceId:
+                        type: string
+                        example: "507f1f77bcf86cd799439017"
+                      requests:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439018"
+                      results:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439019"
+                      notifications:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439020"
+                      fees:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439021"
+                      hallTickets:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439022"
+    put:
+      summary: Update student by ID
+      security:
+        - bearerAuth: []
+      tags:
+        - Student
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          description: ID of the student to update
+          schema:
+            type: string
+            example: "507f1f77bcf86cd799439011"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enrollmentNo:
+                  type: number
+                  example: 20201001
+                userId:
+                  type: string
+                  example: "507f1f77bcf86cd799439012"
+                profileId:
+                  type: string
+                  example: "507f1f77bcf86cd799439013"
+                instituteId:
+                  type: string
+                  example: "507f1f77bcf86cd799439014"
+                departmentId:
+                  type: string
+                  example: "507f1f77bcf86cd799439015"
+                classId:
+                  type: string
+                  example: "507f1f77bcf86cd799439016"
+                attendanceId:
+                  type: string
+                  example: "507f1f77bcf86cd799439017"
+                requests:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439018"
+                results:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439019"
+                notifications:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439020"
+                fees:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439021"
+                hallTickets:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439022"
+      responses:
+        200:
+          description: Student updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      enrollmentNo:
+                        type: number
+                        example: 20201001
+    delete:
+      summary: Delete student by ID
+      security:
+        - bearerAuth: []
+      tags:
+        - Student
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          description: ID of the student to delete
+          schema:
+            type: string
+            example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Student deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Student deleted successfully"
+
+  # ----------->> CLASS <<----------
+  /api/v1/class:
+    get:
+      tags:
+        - Class
+      summary: Get all classes
+      description: Retrieve a list of all classes
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Classes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                        name:
+                          type: string
+                          example: "DIV-A"
+                        students:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439011"
+                        timeTableId:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                        exams:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439011"
+                        updates:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439011"
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+    post:
+      tags:
+        - Class
+      summary: Create a new class
+      description: Create a new class (Admin only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: "DIV-A"
+                students:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439011"
+                timeTableId:
+                  type: string
+                  example: "507f1f77bcf86cd799439011"
+                exams:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439011"
+                updates:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439011"
+      responses:
+        201:
+          description: Class created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      name:
+                        type: string
+                        example: "DIV-A"
+                      students:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                      timeTableId:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      exams:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                      updates:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+
+  /api/v1/class/{classId}:
+    get:
+      tags:
+        - Class
+      summary: Get class by ID
+      description: Retrieve a specific class by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Class ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Class retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      name:
+                        type: string
+                        example: "DIV-A"
+                      students:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                      timeTableId:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      exams:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                      updates:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+    put:
+      tags:
+        - Class
+      summary: Update a class
+      description: Update an existing class (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Class ID
+          example: "507f1f77bcf86cd799439011"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "DIV-A"
+                students:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439011"
+                timeTableId:
+                  type: string
+                  example: "507f1f77bcf86cd799439011"
+                exams:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439011"
+                updates:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Class updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      name:
+                        type: string
+                        example: "DIV-A"
+                      students:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                      timeTableId:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      exams:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                      updates:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+    delete:
+      tags:
+        - Class
+      summary: Delete a class
+      description: Delete an existing class (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Class ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Class deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Class deleted successfully"
+
+# ----------->> DEPARTMENT <<----------
+  /api/v1/department:
+    get:
+      tags:
+        - Department
+      summary: Get all departments
+      description: Retrieve a list of all departments
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Departments retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                        name:
+                          type: string
+                          example: "Computer Engineering"
+                        batch:
+                          type: string
+                          example: "2025"
+                        classes:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439011"
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+    post:
+      tags:
+        - Department
+      summary: Create a new department
+      description: Create a new department (Admin only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - batch
+              properties:
+                name:
+                  type: string
+                  example: "Computer Engineering"
+                batch:
+                  type: string
+                  example: "2025"
+                classes:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439011"
+      responses:
+        201:
+          description: Department created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      name:
+                        type: string
+                        example: "Computer Engineering"
+                      batch:
+                        type: string
+                        example: "2025"
+                      classes:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+
+  /api/v1/department/{departmentId}:
+    get:
+      tags:
+        - Department
+      summary: Get department by ID
+      description: Retrieve a specific department by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: departmentId
+          required: true
+          schema:
+            type: string
+          description: Department ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Department retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      name:
+                        type: string
+                        example: "Computer Engineering"
+                      batch:
+                        type: string
+                        example: "2025"
+                      classes:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+    put:
+      tags:
+        - Department
+      summary: Update a department
+      description: Update an existing department (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: departmentId
+          required: true
+          schema:
+            type: string
+          description: Department ID
+          example: "507f1f77bcf86cd799439011"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Computer Engineering"
+                batch:
+                  type: string
+                  example: "2025"
+                classes:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Department updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      name:
+                        type: string
+                        example: "Computer Engineering"
+                      batch:
+                        type: string
+                        example: "2025"
+                      classes:
+                        type: array
+                        items:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+    delete:
+      tags:
+        - Department
+      summary: Delete a department
+      description: Delete an existing department (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: departmentId
+          required: true
+          schema:
+            type: string
+          description: Department ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Department deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Department deleted successfully"
+
+# ----------->> REQUEST <<----------
+  /api/v1/request:
+    get:
+      tags:
+        - Request
+      summary: Get all requests
+      description: Retrieve a list of all requests
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Requests retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                        date:
+                          type: string
+                          format: date-time
+                        title:
+                          type: string
+                          example: "Leave Request"
+                        creator:
+                          type: string
+                          example: "507f1f77bcf86cd799439012"
+                        description:
+                          type: string
+                          example: "Request for medical leave"
+                        assignee:
+                          type: string
+                          example: "507f1f77bcf86cd799439013"
+                        lastUpdated:
+                          type: string
+                          format: date-time
+                        comments:
+                          type: string
+                          example: "Approved"
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+    post:
+      tags:
+        - Request
+      summary: Create a new request
+      description: Create a new request (Student only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - date
+                - title
+                - creator
+                - description
+                - assignee
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                title:
+                  type: string
+                  example: "Leave Request"
+                creator:
+                  type: string
+                  example: "507f1f77bcf86cd799439012"
+                description:
+                  type: string
+                  example: "Request for medical leave"
+                assignee:
+                  type: string
+                  example: "507f1f77bcf86cd799439013"
+                comments:
+                  type: string
+                  example: "Pending approval"
+      responses:
+        201:
+          description: Request created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 201
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      date:
+                        type: string
+                        format: date-time
+                      title:
+                        type: string
+                        example: "Leave Request"
+                      creator:
+                        type: string
+                        example: "507f1f77bcf86cd799439012"
+                      description:
+                        type: string
+                        example: "Request for medical leave"
+                      assignee:
+                        type: string
+                        example: "507f1f77bcf86cd799439013"
+                      lastUpdated:
+                        type: string
+                        format: date-time
+                      comments:
+                        type: string
+                        example: "Pending approval"
+
+  /api/v1/request/{requestId}:
+    get:
+      tags:
+        - Request
+      summary: Get request by ID
+      description: Retrieve a specific request by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: requestId
+          required: true
+          schema:
+            type: string
+          description: Request ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Request retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      date:
+                        type: string
+                        format: date-time
+                      title:
+                        type: string
+                        example: "Leave Request"
+                      creator:
+                        type: string
+                        example: "507f1f77bcf86cd799439012"
+                      description:
+                        type: string
+                        example: "Request for medical leave"
+                      assignee:
+                        type: string
+                        example: "507f1f77bcf86cd799439013"
+                      lastUpdated:
+                        type: string
+                        format: date-time
+                      comments:
+                        type: string
+                        example: "Approved"
+    put:
+      tags:
+        - Request
+      summary: Update a request
+      description: Update an existing request (Student only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: requestId
+          required: true
+          schema:
+            type: string
+          description: Request ID
+          example: "507f1f77bcf86cd799439011"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                title:
+                  type: string
+                  example: "Leave Request"
+                description:
+                  type: string
+                  example: "Request for medical leave"
+                assignee:
+                  type: string
+                  example: "507f1f77bcf86cd799439013"
+                comments:
+                  type: string
+                  example: "Updated request"
+      responses:
+        200:
+          description: Request updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: "507f1f77bcf86cd799439011"
+                      date:
+                        type: string
+                        format: date-time
+                      title:
+                        type: string
+                        example: "Leave Request"
+                      creator:
+                        type: string
+                        example: "507f1f77bcf86cd799439012"
+                      description:
+                        type: string
+                        example: "Request for medical leave"
+                      assignee:
+                        type: string
+                        example: "507f1f77bcf86cd799439013"
+                      lastUpdated:
+                        type: string
+                        format: date-time
+                      comments:
+                        type: string
+                        example: "Updated request"
+    delete:
+      tags:
+        - Request
+      summary: Delete a request
+      description: Delete an existing request (Student only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: requestId
+          required: true
+          schema:
+            type: string
+          description: Request ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Request deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Request deleted successfully"
+
+  # ----------->> PLACEMENT <<----------
+  /api/v1/placements:
+    get:
+      tags:
+        - Placement
+      summary: Get all placements
+      description: Retrieve a list of all placement opportunities
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully retrieved placements
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "507f1f77bcf86cd799439011"
+                        companyName:
+                          type: string
+                          example: "Tech Corp"
+                        companyImage:
+                          type: string
+                          example: "https://example.com/company-logo.png"
+                        jobRole:
+                          type: string
+                          example: "Software Engineer"
+                        agreement:
+                          type: string
+                          example: "Full-time"
+                        package:
+                          type: string
+                          example: "12 LPA"
+                        description:
+                          type: string
+                          example: "Software Engineer position for fresh graduates"
+                        requirement:
+                          type: string
+                          example: "B.Tech in Computer Science, min 7 CGPA"
+                        deadline:
+                          type: string
+                          format: date-time
+                        technologies:
+                          type: string
+                          example: "Java-Python-React"
+                        appliedStudents:
+                          type: array
+                          items:
+                            type: string
+                            example: "507f1f77bcf86cd799439012"
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
+    post:
+      tags:
+        - Placement
+      summary: Create a new placement
+      description: Create a new placement opportunity (Admin only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - companyName
+                - companyImage
+                - jobRole
+                - agreement
+                - package
+                - description
+                - requirement
+                - deadline
+                - technologies
+              properties:
+                companyName:
+                  type: string
+                  example: "Tech Corp"
+                companyImage:
+                  type: string
+                  example: "https://example.com/company-logo.png"
+                jobRole:
+                  type: string
+                  example: "Software Engineer"
+                agreement:
+                  type: string
+                  example: "Full-time"
+                package:
+                  type: string
+                  example: "12 LPA"
+                description:
+                  type: string
+                  example: "Software Engineer position for fresh graduates"
+                requirement:
+                  type: string
+                  example: "B.Tech in Computer Science, min 7 CGPA"
+                deadline:
+                  type: string
+                  format: date-time
+                technologies:
+                  type: string
+                  example: "Java-Python-React"
+                appliedStudents:
+                  type: array
+                  items:
+                    type: string
+                    example: "507f1f77bcf86cd799439012"
+      responses:
+        201:
+          description: Placement created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlacementResponse'
+
+  /api/v1/placements/{placementId}:
+    get:
+      tags:
+        - Placement
+      summary: Get placement by ID
+      description: Retrieve a specific placement by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: placementId
+          required: true
+          schema:
+            type: string
+          description: Placement ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Successfully retrieved placement
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlacementResponse'
+    put:
+      tags:
+        - Placement
+      summary: Update placement
+      description: Update an existing placement (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: placementId
+          required: true
+          schema:
+            type: string
+          description: Placement ID
+          example: "507f1f77bcf86cd799439011"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyName:
+                  type: string
+                companyImage:
+                  type: string
+                jobRole:
+                  type: string
+                agreement:
+                  type: string
+                package:
+                  type: string
+                description:
+                  type: string
+                requirement:
+                  type: string
+                deadline:
+                  type: string
+                  format: date-time
+                technologies:
+                  type: string
+                appliedStudents:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        200:
+          description: Placement updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlacementResponse'
+    delete:
+      tags:
+        - Placement
+      summary: Delete placement
+      description: Delete an existing placement (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: placementId
+          required: true
+          schema:
+            type: string
+          description: Placement ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Placement deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully"
+
+  # ----------->> PROFILE <<----------
+  /api/v1/profiles:
+    get:
+      tags:
+        - Profile
+      summary: Get all profiles
+      description: Retrieve a list of all user profiles
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully retrieved profiles
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProfileData'
+    post:
+      tags:
+        - Profile
+      summary: Create a new profile
+      description: Create a new user profile (Teacher only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - firstName
+                - middleName
+                - lastName
+                - gender
+                - birthDate
+                - bloodGroup
+                - address
+                - contact
+                - fatherName
+                - fatherContact
+                - motherName
+                - motherContact
+              properties:
+                userId:
+                  type: string
+                  example: "507f1f77bcf86cd799439011"
+                firstName:
+                  type: string
+                  example: "John"
+                middleName:
+                  type: string
+                  example: "William"
+                lastName:
+                  type: string
+                  example: "Doe"
+                gender:
+                  type: string
+                  enum: ["Male", "Female", "Other"]
+                  example: "Male"
+                birthDate:
+                  type: string
+                  format: date-time
+                bloodGroup:
+                  type: string
+                  example: "O+"
+                address:
+                  type: string
+                  example: "123 Main St, City"
+                contact:
+                  type: string
+                  example: "1234567890"
+                fatherName:
+                  type: string
+                  example: "James Doe"
+                fatherContact:
+                  type: string
+                  example: "9876543210"
+                motherName:
+                  type: string
+                  example: "Jane Doe"
+                motherContact:
+                  type: string
+                  example: "9876543211"
+      responses:
+        201:
+          description: Profile created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+
+  /api/v1/profiles/{profileId}:
+    get:
+      tags:
+        - Profile
+      summary: Get profile by ID
+      description: Retrieve a specific profile by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: profileId
+          required: true
+          schema:
+            type: string
+          description: Profile ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Successfully retrieved profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+    put:
+      tags:
+        - Profile
+      summary: Update profile
+      description: Update an existing profile (Teacher only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: profileId
+          required: true
+          schema:
+            type: string
+          description: Profile ID
+          example: "507f1f77bcf86cd799439011"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileData'
+      responses:
+        200:
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+    delete:
+      tags:
+        - Profile
+      summary: Delete profile
+      description: Delete an existing profile (Teacher only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: profileId
+          required: true
+          schema:
+            type: string
+          description: Profile ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Profile deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully"
+
+  # ----------->> TIMETABLE <<----------
+  /api/v1/timetables:
+    get:
+      tags:
+        - Timetable
+      summary: Get all timetables
+      description: Retrieve a list of all timetables
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully retrieved timetables
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TimetableData'
+    post:
+      tags:
+        - Timetable
+      summary: Create a new timetable
+      description: Create a new timetable (Admin only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - classId
+                - timetable
+              properties:
+                classId:
+                  type: string
+                  example: "507f1f77bcf86cd799439011"
+                timetable:
+                  type: object
+                  example: 
+                    Monday:
+                      "9:00": "Mathematics"
+                      "10:00": "Physics"
+      responses:
+        201:
+          description: Timetable created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimetableResponse'
+
+  /api/v1/timetables/{timeTableId}:
+    get:
+      tags:
+        - Timetable
+      summary: Get timetable by ID
+      description: Retrieve a specific timetable by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: timeTableId
+          required: true
+          schema:
+            type: string
+          description: Timetable ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Successfully retrieved timetable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimetableResponse'
+    put:
+      tags:
+        - Timetable
+      summary: Update timetable
+      description: Update an existing timetable (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: timeTableId
+          required: true
+          schema:
+            type: string
+          description: Timetable ID
+          example: "507f1f77bcf86cd799439011"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                classId:
+                  type: string
+                timetable:
+                  type: object
+      responses:
+        200:
+          description: Timetable updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimetableResponse'
+    delete:
+      tags:
+        - Timetable
+      summary: Delete timetable
+      description: Delete an existing timetable (Admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: timeTableId
+          required: true
+          schema:
+            type: string
+          description: Timetable ID
+          example: "507f1f77bcf86cd799439011"
+      responses:
+        200:
+          description: Timetable deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully"
+
+  # ----------->> EXAM <<----------
+  /api/exam:
+    get:
+      tags:
+        - Exam
+      summary: Get all exams
+      description: Retrieve a list of all exams with populated user information
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Successfully retrieved exams
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully"
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Exam'
+    post:
+      tags:
+        - Exam
+      summary: Create a new exam
+      description: Create a new exam with questions and time settings
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - questions
+                - startTime
+                - endTime
+              properties:
+                title:
+                  type: string
+                  example: "Mid-term Examination"
+                description:
+                  type: string
+                  example: "Computer Science mid-term examination"
+                questions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Question'
+                startTime:
+                  type: string
+                  format: date-time
+                  example: "2024-03-20T09:00:00Z"
+                endTime:
+                  type: string
+                  format: date-time
+                  example: "2024-03-20T12:00:00Z"
+      responses:
+        '201':
+          description: Exam created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 201
+                  message:
+                    type: string
+                    example: "Data created successfully"
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Exam'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 400
+                  message:
+                    type: string
+                    example: "End time must be after start time"
+                  success:
+                    type: boolean
+                    example: false
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /api/exam/{examId}:
+    get:
+      tags:
+        - Exam
+      summary: Get exam by ID
+      description: Retrieve a specific exam by its ID with populated user information
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: examId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+          description: The ID of the exam to retrieve
+      responses:
+        '200':
+          description: Successfully retrieved exam
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data fetched successfully"
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Exam'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Exam
+      summary: Update exam
+      description: Update an existing exam by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: examId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+          description: The ID of the exam to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                questions:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Question'
+                startTime:
+                  type: string
+                  format: date-time
+                endTime:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: Exam updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data updated successfully"
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Exam'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Exam
+      summary: Delete exam
+      description: Delete an exam by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: examId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+          description: The ID of the exam to delete
+      responses:
+        '200':
+          description: Exam deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    example: 200
+                  message:
+                    type: string
+                    example: "Data deleted successfully"
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'

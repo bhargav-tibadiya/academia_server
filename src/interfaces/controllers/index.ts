@@ -173,3 +173,34 @@ interface UpdateUserBody {
 export interface UpdateUserRequest extends Request {
   body: UpdateUserBody
 }
+
+// --> CONTROLLER.CLASS.CREATE
+export interface CreateClassRequest extends Request {
+  body: {
+    name: string;
+    departmentId: string;
+    students?: string[];
+    timeTableId?: string;
+    exams?: string[];
+    updates?: string[];
+  }
+}
+
+export interface UpdateClassRequest extends Request {
+  body: {
+    name?: string;
+    students?: string[];
+    timeTableId?: string;
+    exams?: string[];
+    updates?: string[];
+  },
+  params: {
+    classId: string;
+  }
+} 
+
+export interface DeleteClassRequest extends Request {
+  params: {
+    classId: string;
+  }
+}
