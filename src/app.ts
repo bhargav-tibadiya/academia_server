@@ -14,6 +14,7 @@ import RootRouter from '@routes/root.routes';
 import { connect } from "@config/db";
 import { corsOptions, rateLimiterConfig } from "@utils/constants/config";
 import { ROUTES } from "@utils/constants/routes";
+import { setupSwagger } from "@utils/swagger";
 
 
 // Setup Environment
@@ -35,6 +36,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(limiter)
+setupSwagger(app);
 
 
 // Routes

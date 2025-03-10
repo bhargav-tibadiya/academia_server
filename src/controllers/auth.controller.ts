@@ -98,7 +98,7 @@ export const registerUser: RequestHandler = async (req: RegisterUserRequest, res
 
     logger.info(`New user created: ${email}`);
 
-    const response = responseCreator(STATUS.CREATED, MESSAGES.USER_AUTHENTICATED, true, newUser);
+    const response = responseCreator(STATUS.CREATED, MESSAGES.USER_CREATED, true, newUser);
     res.status(STATUS.CREATED).json(response);
     return
   } catch (error: any) {
@@ -130,7 +130,7 @@ export const sendOTP: RequestHandler = async (req: SendOTPRequest, res: ServerRe
     await OTP.create({ email, otp });
 
     logger.info(`OTP sent successfully to: ${email}`);
-    res.status(STATUS.OK).json({ success: true, message: "OTP sent successfully" });
+    res.status(STATUS.OK).json({ success: true, message: `OTP sent successfully, OTP : ${otp}` });
     return
   } catch (error: any) {
     logger.error(`Error in sendOTP: ${error.message}`);

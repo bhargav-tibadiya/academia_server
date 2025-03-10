@@ -31,9 +31,12 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.6",
     "nodemailer": "^6.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "tsconfig-paths": "^4.2.0",
     "winston": "^3.17.0",
-    "winston-daily-rotate-file": "^5.0.0"
+    "winston-daily-rotate-file": "^5.0.0",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -43,7 +46,12 @@
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^22.13.0",
     "@types/nodemailer": "^6.4.17",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "@types/yamljs": "^0.2.34",
+    "i": "^0.3.7",
     "nodemon": "^3.1.9",
+    "npm": "^11.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   }

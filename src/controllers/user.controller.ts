@@ -14,11 +14,11 @@ import { responseCreator } from "@utils/helpers";
 // Types & Constants
 import { STATUS } from "@utils/constants/status";
 import { MESSAGES } from "@utils/constants/message";
-import { ServerResponse } from "@interfaces/controllers";
+import { ServerResponse, UpdateUserRequest } from "@interfaces/controllers";
 
 
 // --> Get all users
-export const getAllUsers: RequestHandler = async (_, res: ServerResponse) => {
+export const getAllUsers: RequestHandler = async (req, res: ServerResponse) => {
   try {
     const users = await User.find();
     logger.info("Fetched all users");
@@ -56,12 +56,12 @@ export const getUserById: RequestHandler = async (req, res: ServerResponse) => {
 };
 
 // --> Update user
-export const updateUser: RequestHandler = async (req, res: ServerResponse) => {
+export const updateUser: RequestHandler = async (req: UpdateUserRequest, res: ServerResponse) => {
   const { userId } = req.params;
-  const { email } = req.body;
+  const userData = req.body;
 
   try {
-    const updatedUser = await User.findOneAndUpdate({ userId }, email, { new: true, runValidators: true });
+    const updatedUser = await User.findOneAndUpdate({ userId }, userData, { new: true, runValidators: true });
 
     if (!updatedUser) {
       logger.warn(`${MESSAGES.USER_NOT_FOUND}: ${userId}`);

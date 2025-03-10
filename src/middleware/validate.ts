@@ -2,10 +2,8 @@
 import { responseCreator } from "@utils/helpers";
 import logger from "@services/logger";
 
-
 // Validator
 import Validators from "@utils/validator/validator";
-
 
 // Const & Types
 import { Request, Response, NextFunction } from "express";
